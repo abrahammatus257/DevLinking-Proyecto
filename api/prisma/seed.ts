@@ -222,7 +222,7 @@ async function main() {
 
     console.log("✅ Seed completado con éxito.");
 }
-
+// Esto es un comentario con el objetivo de comprobar que se sube a git.
 main()
     .catch((e) => {
         console.error("❌ Error en seed:", e);
