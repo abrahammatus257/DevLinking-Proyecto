@@ -1,0 +1,365 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Rol {
+  ADMIN
+  CLIENTE
+  PROFESIONAL
+}
+
+enum Estado {
+  ACTIVO
+  INACTIVO
+}
+
+enum Modalidad {
+  VIRTUAL
+  PRESENCIAL
+  MIXTA
+}
+
+enum EstadoCita {
+  PENDIENTE
+  ACEPTADA
+  RECHAZADA
+  CANCELADA
+  COMPLETADA
+}
+
+model Usuario {
+
+  id Int @id @default(autoincrement())
+
+  nombre_completo String @db.VarChar(100)
+
+  correo String @unique @db.VarChar(150)
+
+  password String @db.VarChar(255)
+
+  telefono String? @db.VarChar(20)
+
+  rol Rol
+
+  estado Estado @default(ACTIVO)
+
+  fechaRegistro DateTime @default(now())
+
+  perfilProfesional PerfilProfesional?
+
+  citasCliente Cita[] @relation("ClienteCitas")
+
+  reseñas Reseña[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([correo])
+  @@index([rol])
+  @@index([estado])
+
+  @@map("usuarios")
+}
+
+model PerfilProfesional {
+
+  id Int @id @default(autoincrement())
+
+  tituloProfesional String @db.VarChar(150)
+
+  descripcion String? @db.VarChar(500)
+
+  annosExperiencia Int
+
+  modalidad Modalidad
+
+  provincia String @db.VarChar(100)
+
+  canton String @db.VarChar(100)
+
+  distrito String @db.VarChar(100)
+
+  tarifaBase Decimal @db.Decimal(10,2)
+
+  disponible Boolean @default(true)
+
+  imagenPerfil String @default("profile-not-found.jpg") @db.VarChar(255)
+
+  usuarioId Int @unique
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+
+  servicios Servicio[]
+
+  especialidades ProfesionalEspecialidad[]
+
+  tecnologias ProfesionalTecnologia[]
+
+  citas Cita[] @relation("ProfesionalCitas")
+
+  reseñas Reseña[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([disponible])
+  @@index([modalidad])
+
+  @@map("perfiles_profesionales")
+}
+
+model Categoria {
+
+  id Int @id @default(autoincrement())
+
+  nombre String @unique @db.VarChar(100)
+
+  descripcion String? @db.VarChar(255)
+
+  estado Estado @default(ACTIVO)
+
+  servicios Servicio[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categorias")
+}
+
+model Especialidad {
+
+  id Int @id @default(autoincrement())
+
+  nombre String @unique @db.VarChar(100)
+
+  descripcion String? @db.VarChar(255)
+
+  estado Estado @default(ACTIVO)
+
+  profesionales ProfesionalEspecialidad[]
+
+  servicios ServicioEspecialidad[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("especialidades")
+}
+
+model Tecnologia {
+
+  id Int @id @default(autoincrement())
+
+  nombre String @unique @db.VarChar(100)
+
+  descripcion String? @db.VarChar(255)
+
+  imagen String @default("technology-not-found.jpg") @db.VarChar(255)
+
+  estado Estado @default(ACTIVO)
+
+  profesionales ProfesionalTecnologia[]
+
+  servicios ServicioTecnologia[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tecnologias")
+}
+
+model ProfesionalEspecialidad {
+
+  profesionalId Int
+
+  especialidadId Int
+
+  profesional PerfilProfesional @relation(fields: [profesionalId], references: [id])
+
+  especialidad Especialidad @relation(fields: [especialidadId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@id([profesionalId, especialidadId])
+
+  @@map("profesional_especialidad")
+}
+
+model ProfesionalTecnologia {
+
+  profesionalId Int
+
+  tecnologiaId Int
+
+  profesional PerfilProfesional @relation(fields: [profesionalId], references: [id])
+
+  tecnologia Tecnologia @relation(fields: [tecnologiaId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@id([profesionalId, tecnologiaId])
+
+  @@map("profesional_tecnologia")
+}
+
+model Servicio {
+
+  id Int @id @default(autoincrement())
+
+  nombre String @db.VarChar(150)
+
+  descripcion String? @db.VarChar(500)
+
+  imagenPortada String @default("service-not-found.jpg") @db.VarChar(255)
+
+  precio Decimal @db.Decimal(10,2)
+
+  duracionEstimada Int
+
+  modalidad Modalidad
+
+  estado Estado @default(ACTIVO)
+
+  categoriaId Int
+
+  profesionalId Int
+
+  categoria Categoria @relation(fields: [categoriaId], references: [id])
+
+  profesional PerfilProfesional @relation(fields: [profesionalId], references: [id])
+
+  especialidades ServicioEspecialidad[]
+
+  tecnologias ServicioTecnologia[]
+
+  citas Cita[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoriaId])
+  @@index([profesionalId])
+  @@index([estado])
+  @@index([modalidad])
+
+  @@map("servicios")
+}
+
+model ServicioEspecialidad {
+
+  servicioId Int
+
+  especialidadId Int
+
+  servicio Servicio @relation(fields: [servicioId], references: [id])
+
+  especialidad Especialidad @relation(fields: [especialidadId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@id([servicioId, especialidadId])
+
+  @@map("servicio_especialidad")
+}
+
+model ServicioTecnologia {
+
+  servicioId Int
+
+  tecnologiaId Int
+
+  servicio Servicio @relation(fields: [servicioId], references: [id])
+
+  tecnologia Tecnologia @relation(fields: [tecnologiaId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@id([servicioId, tecnologiaId])
+
+  @@map("servicio_tecnologia")
+}
+
+model Cita {
+
+  id Int @id @default(autoincrement())
+
+  fechaCita DateTime
+
+  horaInicio DateTime
+
+  horaFinalizacion DateTime?
+
+  modalidad Modalidad
+
+  descripcion String? @db.VarChar(500)
+
+  comentarioProfesional String? @db.VarChar(500)
+
+  motivoCancelacion String? @db.VarChar(500)
+
+  estado EstadoCita @default(PENDIENTE)
+
+  monto Decimal @db.Decimal(10,2)
+
+  clienteId Int
+
+  profesionalId Int
+
+  servicioId Int
+
+  cliente Usuario @relation("ClienteCitas", fields: [clienteId], references: [id])
+
+  profesional PerfilProfesional @relation("ProfesionalCitas", fields: [profesionalId], references: [id])
+
+  servicio Servicio @relation(fields: [servicioId], references: [id])
+
+  reseña Reseña?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clienteId])
+  @@index([profesionalId])
+  @@index([servicioId])
+  @@index([estado])
+  @@index([fechaCita])
+
+  @@map("citas")
+}
+
+model Reseña {
+
+  id Int @id @default(autoincrement())
+
+  puntuacion Int
+
+  comentario String? @db.VarChar(500)
+
+  citaId Int @unique
+
+  clienteId Int
+
+  profesionalId Int
+
+
+  cita Cita @relation(fields: [citaId], references: [id])
+  
+  cliente Usuario @relation(fields: [clienteId], references: [id])
+
+  profesional PerfilProfesional @relation(fields: [profesionalId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("resenas")
+}
