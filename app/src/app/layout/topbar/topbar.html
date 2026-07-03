@@ -1,0 +1,30 @@
+<header class="topbar">
+
+  <!-- Acciones -->
+  <div class="topbar-actions">
+
+    <!-- Búsqueda -->
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+
+      <input
+        type="text"
+        placeholder="Buscar profesionales, servicios, categorías..." />
+    </div>
+
+    <!-- Notificaciones -->
+    <button class="notification-btn">
+
+      <i class="fa-regular fa-bell"></i>
+
+      @if (notifications > 0) {
+        <span class="badge">
+          {{ notifications }}
+        </span>
+      }
+
+    </button>
+
+  </div>
+
+</header>

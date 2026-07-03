@@ -1,0 +1,36 @@
+<div class="sidebar">
+
+  <!-- Logo -->
+  <div class="logo-section">
+    <div class="logo-icon">
+      <i class="fa-solid fa-code"></i>
+    </div>
+
+    <div class="logo-text">
+      <h2>Dev<span>Linking</span></h2>
+      <p>Conecta con talento - G&F</p>
+    </div>
+  </div>
+
+  <!-- Menú -->
+  <nav class="menu">
+
+    @for (item of menuItems; track item.label) {
+
+      <a
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+        class="menu-item">
+
+        <i [class]="item.icon"></i>
+
+        <span>{{ item.label }}</span>
+
+      </a>
+
+    }
+
+  </nav>
+
+</div>

@@ -1,0 +1,149 @@
+.sidebar {
+    width: 270px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    background: linear-gradient(180deg,
+            #051726 0%,
+            #081d33 35%,
+            #04121f 100%);
+
+    color: white;
+    padding: 24px 18px;
+    box-sizing: border-box;
+
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ========= LOGO ========= */
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 45px;
+}
+
+.logo-icon {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1;
+
+
+    background: linear-gradient(135deg,
+            #1f7cff,
+            #0b4fb3);
+}
+
+.logo-text h2 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.logo-text span {
+    color: #2f99ff;
+}
+
+.logo-text p {
+    margin: 0;
+    opacity: 0.7;
+    font-size: 13px;
+}
+
+/* ========= MENU ========= */
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 16px 18px;
+
+    border-radius: 16px;
+
+    color: white;
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+}
+
+.menu-item i {
+    font-size: 18px;
+    width: 20px;
+}
+
+.menu-item span {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.menu-item.active {
+    background: linear-gradient(135deg,
+            #1e88ff,
+            #1565c0);
+
+    box-shadow:
+        0 5px 15px rgba(30, 136, 255, 0.3);
+}
+
+/* ========= FOOTER ========= */
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-profile img {
+    width: 46px;
+    height: 46px;
+
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info strong {
+    font-size: 15px;
+}
+
+.user-info small {
+    opacity: 0.7;
+}
