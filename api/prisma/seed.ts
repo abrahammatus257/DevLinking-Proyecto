@@ -225,7 +225,7 @@ async function main() {
 // Esto es un comentario con el objetivo de comprobar que se sube a git.
 main()
     .catch((e) => {
-        console.error("❌ Error en seed:", e);
+        console.error(" Error en seed:", e);
         process.exit(1);
     })
     .finally(async () => {

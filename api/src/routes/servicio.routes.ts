@@ -1,9 +1,15 @@
 import { Router } from "express";
-import { servicioController } from "../controllers/servicio.controller";
+import { ServicioController } from "../controllers/servicio.controller";
+import { asyncHandler } from "../middlewares/async-handler.middleware";
 
-const router = Router();
+export class ServicioRoutes {
+    static get routes(): Router {
+        const router = Router();
+        const controller = new ServicioController(); // <-- Instancia la nueva clase
 
-router.get("/", servicioController.listar);
-router.get("/:id", servicioController.obtenerPorId);
+        router.get('/', asyncHandler(controller.listar));
+        router.get('/:id', asyncHandler(controller.obtenerPorId));
 
-export const ServicioRoutes = { routes: router };
+        return router;
+    }
+}

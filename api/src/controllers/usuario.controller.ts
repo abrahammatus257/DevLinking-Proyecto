@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from "http-status-codes";
 import { usuarioService } from '../services/usuario.service';
+import { parseId } from "../utils/parse-id";
 
 export class UsuarioController {
     listar = async (request: Request, response: Response, next: NextFunction) => {
@@ -12,17 +13,12 @@ export class UsuarioController {
     };
 
     obtenerPorId = async (request: Request, response: Response, next: NextFunction) => {
-        const rawId = Array.isArray(request.params.id) ? request.params.id[0] : request.params.id;
-        const id = parseInt(rawId ?? '', 10);
-        if (isNaN(id)) {
-            return response.status(StatusCodes.BAD_REQUEST).json({ success: false, message: "ID inválido" });
-        }
-
+        const id = parseId(request.params.id);
         const usuario = await usuarioService.obtenerPorId(id);
+        
         if (!usuario) {
             return response.status(StatusCodes.NOT_FOUND).json({ success: false, message: "Usuario no encontrado" });
         }
-
         return response.status(StatusCodes.OK).json({ success: true, data: usuario });
     };
 }
