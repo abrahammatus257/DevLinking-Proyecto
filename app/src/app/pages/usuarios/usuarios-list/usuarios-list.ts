@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usuarios-list',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './usuarios-list.html',
-  styleUrl: './usuarios-list.css',
+  styleUrl: './usuarios-list.css'
 })
-export class UsuariosList {}
+export class UsuariosList {
+
+  usuarios: any[] = [];
+
+}
