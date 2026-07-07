@@ -1,24 +1,60 @@
 <div class="page-header">
   <div>
     <h1>Usuarios</h1>
+
     <p>Administración de usuarios registrados</p>
   </div>
 </div>
 
-<div class="table-card">
-  @if (usuariosFiltrados().length > 0) {
+<div class="usuarios-container">
+  <div class="usuarios-header">
+    <h3>Gestión de Usuarios</h3>
+
+    <div class="header-filters">
+      <div class="search-container">
+        <label for="search"> Buscar usuario </label>
+
+        <input
+          id="search"
+          type="text"
+          placeholder="Nombre o correo..."
+          #txtSearch
+          (input)="search.set(txtSearch.value)"
+        />
+      </div>
+
+      <div class="filters">
+        <label for="rol"> Tipo de usuario </label>
+
+        <select id="rol" #rol (change)="filtrarPorRol(rol.value)">
+          <option value="">Todos</option>
+
+          <option value="ADMIN">Administrador</option>
+
+          <option value="CLIENTE">Cliente</option>
+
+          <option value="PROFESIONAL">Profesional</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  @if (usuariosLista().length > 0) {
     <table>
       <thead>
         <tr>
           <th>Nombre</th>
+
           <th>Correo</th>
+
           <th>Rol</th>
+
           <th>Estado</th>
         </tr>
       </thead>
 
       <tbody>
-        @for (usuario of usuariosFiltrados(); track usuario.id) {
+        @for (usuario of usuariosLista(); track usuario.id) {
           <tr>
             <td>
               {{ usuario.nombre_completo }}
@@ -37,6 +73,7 @@
                 class="status"
                 [class.active]="usuario.estado === 'ACTIVO'"
                 [class.inactive]="usuario.estado === 'INACTIVO'"
+                (click)="confirmarCambioEstado(usuario.id)"
               >
                 {{ usuario.estado }}
               </span>

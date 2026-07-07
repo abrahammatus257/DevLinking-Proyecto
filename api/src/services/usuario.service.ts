@@ -3,7 +3,6 @@ import { prisma } from "../config/prisma";
 export const usuarioService = {
     async listar() {
         return await prisma.usuario.findMany({
-            where: { estado: "ACTIVO" },
             select: {
                 id: true,
                 nombre_completo: true,
@@ -30,5 +29,41 @@ export const usuarioService = {
                 perfilProfesional: true
             }
         });
+    },
+
+    
+    async cambiarEstado(id: number) {
+
+        const usuario =
+            await prisma.usuario.findUnique({
+                where: { id }
+            });
+
+        if (!usuario) {
+
+            throw new Error(
+                'Usuario no encontrado'
+            );
+
+        }
+
+        const nuevoEstado =
+
+            usuario.estado === 'ACTIVO'
+                ? 'INACTIVO'
+                : 'ACTIVO';
+
+        return await prisma.usuario.update({
+
+            where: { id },
+
+            data: {
+                estado: nuevoEstado
+            }
+
+        });
+
     }
+
+
 };

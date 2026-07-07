@@ -3,13 +3,13 @@ import { UsuarioController } from "../controllers/usuario.controller";
 import { asyncHandler } from "../middlewares/async-handler.middleware";
 
 export class UsuarioRoutes {
-    static get routes(): Router {
-        const router = Router();
-        const controller = new UsuarioController();
+  static get routes(): Router {
+    const router = Router();
+    const controller = new UsuarioController();
 
-        router.get('/', asyncHandler(controller.listar));
-        router.get('/:id', asyncHandler(controller.obtenerPorId));
-
-        return router;
-    }
+    router.get("/", asyncHandler(controller.listar));
+    router.get("/:id", asyncHandler(controller.obtenerPorId));
+    router.patch("/:id/estado", asyncHandler(controller.cambiarEstado));
+    return router;
+  }
 }
