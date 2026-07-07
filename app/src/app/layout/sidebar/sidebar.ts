@@ -15,37 +15,44 @@ export class Sidebar {
     {
       label: 'Inicio',
       icon: 'fa-solid fa-house',
-      route: '/'
+      route: '/',
+      color: '#1e88ff'
     },
     {
       label: 'Usuarios',
       icon: 'fa-solid fa-users',
-      route: '/usuarios'
+      route: '/usuarios',
+      color: '#1e88ff'
     },
     {
       label: 'Profesionales',
       icon: 'fa-solid fa-laptop-code',
-      route: '/profesionales'
+      route: '/profesionales',
+      color: '#7c3aed'
     },
     {
       label: 'Servicios',
       icon: 'fa-solid fa-briefcase',
-      route: '/servicios'
+      route: '/servicios',
+      color: '#059669'
     },
     {
       label: 'Categorías',
       icon: 'fa-solid fa-folder',
-      route: '/categorias'
+      route: '/categorias',
+      color: '#ff0000'
     },
     {
       label: 'Especialidades',
       icon: 'fa-solid fa-tags',
-      route: '/especialidades'
+      route: '/especialidades',
+      color: '#f59e0b'
     },
     {
       label: 'Citas',
       icon: 'fa-solid fa-calendar-days',
-      route: '/citas'
+      route: '/citas',
+      color: '#ec4899'
     }
   ];
 }

@@ -21,6 +21,7 @@
         [routerLink]="item.route"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+        [style.--menu-color]="item.color"
         class="menu-item">
 
         <i [class]="item.icon"></i>
