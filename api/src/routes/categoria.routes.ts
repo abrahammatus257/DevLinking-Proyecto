@@ -11,6 +11,7 @@ export class CategoriaRoutes {
 
         router.get('/', asyncHandler(controller.listar));
         router.get('/:id', asyncHandler(controller.obtenerPorId));
+        router.patch("/:id/estado", asyncHandler(controller.cambiarEstado));
         router.post('/', validateRequest(createCategoriaSchema), asyncHandler(controller.crear));
         router.put('/:id', validateRequest(updateCategoriaSchema), asyncHandler(controller.actualizar));
 

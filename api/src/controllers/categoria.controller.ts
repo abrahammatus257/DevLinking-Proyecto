@@ -1,12 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { categoriaService } from "../services/categoria.service";
-import { sendSuccess } from "../utils/http-response"; 
+import { sendSuccess } from "../utils/http-response";
 import { parseId } from "../utils/parse-id";
 
 export class CategoriaController {
-    
-    // 1. Listar simple (sin paginación) con el formato de clase
+
     listar = async (request: Request, response: Response, next: NextFunction) => {
         const resultado = await categoriaService.listar();
         return response.status(StatusCodes.OK).json({
@@ -18,18 +17,18 @@ export class CategoriaController {
     // 2. Obtener por ID usando parseId
     obtenerPorId = async (request: Request, response: Response, next: NextFunction) => {
         const id = parseId(request.params.id);
-        
+
         const categoria = await categoriaService.obtenerPorId(id);
         if (!categoria) {
-            return response.status(StatusCodes.NOT_FOUND).json({ 
-                success: false, 
-                message: "Categoría no encontrada" 
+            return response.status(StatusCodes.NOT_FOUND).json({
+                success: false,
+                message: "Categoría no encontrada"
             });
         }
-        
-        return response.status(StatusCodes.OK).json({ 
-            success: true, 
-            data: categoria 
+
+        return response.status(StatusCodes.OK).json({
+            success: true,
+            data: categoria
         });
     };
 
@@ -53,5 +52,27 @@ export class CategoriaController {
             categoria,
             "Categoría actualizada correctamente"
         );
+    };
+
+    cambiarEstado = async (
+        request: Request,
+        response: Response
+    ) => {
+
+        const id = parseId(
+            request.params.id
+        );
+
+        const resultado =
+            await categoriaService
+                .cambiarEstado(id);
+
+        return response
+            .status(StatusCodes.OK)
+            .json({
+                success: true,
+                data: resultado
+            });
+
     };
 }

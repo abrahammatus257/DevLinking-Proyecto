@@ -1,1 +1,146 @@
-<p>categorias-list works!</p>
+<div class="page-header">
+
+  <div>
+
+    <h1>Categorías</h1>
+
+    <p>
+      Administración de categorías de servicios
+    </p>
+
+  </div>
+
+</div>
+
+<div class="usuarios-container">
+
+  <div class="usuarios-header">
+
+    <h3>Gestión de Categorías</h3>
+
+    <div class="header-filters">
+
+      <div class="search-container">
+
+        <label>
+          Buscar categoría
+        </label>
+
+        <input
+          type="text"
+          placeholder="Nombre..."
+          #txtSearch
+          (input)="search.set(txtSearch.value)">
+
+      </div>
+
+      <div class="filters">
+
+        <label>
+          Estado
+        </label>
+
+        <select
+          #estado
+          (change)="filtrarPorEstado(estado.value)">
+
+          <option value="">
+            Todos
+          </option>
+
+          <option value="ACTIVO">
+            Activo
+          </option>
+
+          <option value="INACTIVO">
+            Inactivo
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  @if (categoriasLista().length > 0) {
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for (
+          categoria of categoriasLista();
+          track categoria.id
+        ) {
+
+          <tr>
+
+            <td>
+
+              {{ categoria.nombre }}
+
+            </td>
+
+            <td>
+
+              {{ categoria.descripcion }}
+
+            </td>
+
+            <td>
+
+              <span
+                class="status"
+                [class.active]="categoria.estado === 'ACTIVO'"
+                [class.inactive]="categoria.estado === 'INACTIVO'"
+                (click)="confirmarCambioEstado(categoria.id)">
+
+                {{ categoria.estado }}
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  }
+
+  @else {
+
+    <div class="empty-state">
+
+      <i class="fa-solid fa-layer-group"></i>
+
+      <h2>
+        No hay categorías disponibles
+      </h2>
+
+      <p>
+        Cuando existan categorías registradas aparecerán aquí.
+      </p>
+
+    </div>
+
+  }
+
+</div>
