@@ -60,24 +60,6 @@ export class UsuariosList implements OnInit {
     this.rolSeleccionado.set(rol);
   }
 
-  cambiarEstado(id: number) {
-    const nuevosUsuarios = this.usuarios().map((u) => {
-      if (u.id === id) {
-        const nuevoEstado: Estado = u.estado === 'ACTIVO' ? 'INACTIVO' : 'ACTIVO';
-
-        return {
-          ...u,
-
-          estado: nuevoEstado,
-        };
-      }
-
-      return u;
-    });
-
-    this.usuarios.set(nuevosUsuarios);
-  }
-
   confirmarCambioEstado(id: number): void {
     Swal.fire({
       title: 'Cambiar estado',
