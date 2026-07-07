@@ -1,37 +1,27 @@
 <div class="page-header">
-
   <div>
     <h1>Usuarios</h1>
     <p>Administración de usuarios registrados</p>
   </div>
-
 </div>
 
 <div class="table-card">
-
-  @if (usuarios.length > 0) {
-
+  @if (usuariosFiltrados().length > 0) {
     <table>
-
       <thead>
-
         <tr>
           <th>Nombre</th>
           <th>Correo</th>
           <th>Rol</th>
           <th>Estado</th>
         </tr>
-
       </thead>
 
       <tbody>
-
-        @for (usuario of usuarios; track usuario.id) {
-
+        @for (usuario of usuariosFiltrados(); track usuario.id) {
           <tr>
-
             <td>
-              {{ usuario.nombre }}
+              {{ usuario.nombre_completo }}
             </td>
 
             <td>
@@ -43,42 +33,25 @@
             </td>
 
             <td>
-
               <span
                 class="status"
-                [class.active]="usuario.activo">
-
-                {{ usuario.activo ? 'Activo' : 'Inactivo' }}
-
+                [class.active]="usuario.estado === 'ACTIVO'"
+                [class.inactive]="usuario.estado === 'INACTIVO'"
+              >
+                {{ usuario.estado }}
               </span>
-
             </td>
-
           </tr>
-
         }
-
       </tbody>
-
     </table>
-
-  }
-
-  @else {
-
+  } @else {
     <div class="empty-state">
-
       <i class="fa-solid fa-users"></i>
 
       <h2>No hay usuarios disponibles</h2>
 
-      <p>
-        Cuando el sistema obtenga información sobre los usuarios,
-        aparecerán aquí.
-      </p>
-
+      <p>Cuando el sistema obtenga información sobre los usuarios, aparecerán aquí.</p>
     </div>
-
   }
-
 </div>

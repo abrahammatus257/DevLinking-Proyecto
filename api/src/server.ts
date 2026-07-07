@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
     });
 });
 //---- Definir rutas ----
-app.use(AppRoutes.routes)
+app.use('/api', AppRoutes.routes)
 
 // Handle errors middleware
 //app.use(ErrorMiddleware.handleError)
