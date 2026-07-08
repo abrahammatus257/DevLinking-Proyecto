@@ -121,7 +121,7 @@ export const routes: Routes = [
         component: CitasDetalle,
         title: 'Detalle cita'
       }
-
+      
     ]
   },
 

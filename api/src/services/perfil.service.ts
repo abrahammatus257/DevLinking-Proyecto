@@ -63,7 +63,7 @@ export const perfilService = {
     });
   },
 
-  crear(data: CrearPerfilDto) {
+  crear(data: CreateProfesionalDto) {
     return prisma.perfil.create({
       data,
     });

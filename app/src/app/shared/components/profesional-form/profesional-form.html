@@ -1,0 +1,163 @@
+<form
+    (submit)="
+    $event.preventDefault();
+    submit()
+">
+
+    <div class="form-header">
+
+        <h1>
+            Crear Profesional
+        </h1>
+
+        <p>
+            Registra un nuevo profesional en DevLinking
+        </p>
+
+    </div>
+
+    <div class="form-section">
+
+        <h2>
+            👨‍💻 Información Profesional
+        </h2>
+
+        <div class="form-grid">
+
+            <label>
+
+                Título Profesional
+
+                <input
+                    type="text">
+
+            </label>
+
+            <label>
+
+                Descripción
+
+                <textarea
+                    rows="5">
+
+                </textarea>
+
+            </label>
+
+            <label>
+
+                Años de Experiencia
+
+                <input
+                    type="number">
+
+            </label>
+
+            <label>
+
+                Modalidad
+
+                <select>
+
+                    <option value="VIRTUAL">
+                        Virtual
+                    </option>
+
+                    <option value="PRESENCIAL">
+                        Presencial
+                    </option>
+
+                    <option value="MIXTA">
+                        Mixta
+                    </option>
+
+                </select>
+
+            </label>
+
+        </div>
+
+    </div>
+
+    <div class="form-section">
+
+        <h2>
+            📍 Ubicación
+        </h2>
+
+        <div class="form-grid">
+
+            <label>
+
+                Provincia
+
+                <input
+                    type="text">
+
+            </label>
+
+            <label>
+
+                Cantón
+
+                <input
+                    type="text">
+
+            </label>
+
+            <label>
+
+                Distrito
+
+                <input
+                    type="text">
+
+            </label>
+
+        </div>
+
+    </div>
+
+    <div class="form-section">
+
+        <h2>
+            💰 Información Comercial
+        </h2>
+
+        <div class="form-grid">
+
+            <label>
+
+                Tarifa Base
+
+                <input
+                    type="number">
+
+            </label>
+
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+
+        <button
+            class="btn-cancelar"
+            type="button"
+            (click)="cancelar.emit()">
+
+            Cancelar
+
+        </button>
+
+        <button
+            class="btn-guardar"
+            type="submit">
+
+            🚀 Crear Profesional
+
+        </button>
+
+    </div>
+
+</form>
