@@ -5,6 +5,8 @@ export type Modalidad =
 
 export interface Tecnologia {
 
+  id: number;
+
   nombre: string;
 
   imagen: string;
@@ -62,6 +64,8 @@ export interface Profesional {
 }
 
 export interface Especialidad {
+
+  id: number;
 
   nombre: string;
 

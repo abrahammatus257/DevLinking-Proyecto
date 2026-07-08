@@ -1,163 +1,210 @@
-<form
-    (submit)="
-    $event.preventDefault();
-    submit()
-">
+<form (submit)="$event.preventDefault(); submit()">
+  <div class="form-header">
+    <h1>Crear Profesional</h1>
 
-    <div class="form-header">
+    <p>Registra un nuevo profesional en DevLinking</p>
+  </div>
 
-        <h1>
-            Crear Profesional
-        </h1>
+  <div class="form-section">
+    <h2>
+      <i class="fa-solid fa-user-tie"></i>
+      Información Profesional
+    </h2>
 
-        <p>
-            Registra un nuevo profesional en DevLinking
-        </p>
+    <div class="form-grid-profesional">
+      <label>
+        Título Profesional
 
+        <input
+          type="text"
+          placeholder="Ej: Ingeniero de Software Senior"
+          [formField]="profesionalForm.tituloProfesional"
+        />
+      </label>
+
+      <label>
+        Años de Experiencia
+
+        <input
+          type="number"
+          step="1"
+          [formField]="profesionalForm.annosExperiencia"
+          (keydown)="soloEnteros($event)"
+        />
+
+        @if (
+          profesionalForm.annosExperiencia().touched() &&
+          profesionalForm.annosExperiencia().invalid()
+        ) {
+          <p class="input-error">
+            {{ profesionalForm.annosExperiencia().errors()[0].message }}
+          </p>
+        }
+      </label>
+
+      <label>
+        Modalidad
+
+        <select [formField]="profesionalForm.modalidad">
+          <option value="VIRTUAL">Virtual</option>
+
+          <option value="PRESENCIAL">Presencial</option>
+
+          <option value="MIXTA">Mixta</option>
+        </select>
+      </label>
+
+      <label class="full-width">
+        Descripción
+
+        <textarea rows="5" [formField]="profesionalForm.descripcion"> </textarea>
+      </label>
     </div>
+  </div>
 
-    <div class="form-section">
+  <div class="form-section">
+    <h2>
+      <i class="fa-solid fa-image"></i>
 
-        <h2>
-            👨‍💻 Información Profesional
-        </h2>
+      Imagen de Perfil
+    </h2>
 
-        <div class="form-grid">
+    <div class="image-layout">
+      <div class="image-upload-box">
+        <button type="button" class="btn-image" (click)="fileInput.click()">
+          <i class="fa-solid fa-upload"></i>
 
-            <label>
-
-                Título Profesional
-
-                <input
-                    type="text">
-
-            </label>
-
-            <label>
-
-                Descripción
-
-                <textarea
-                    rows="5">
-
-                </textarea>
-
-            </label>
-
-            <label>
-
-                Años de Experiencia
-
-                <input
-                    type="number">
-
-            </label>
-
-            <label>
-
-                Modalidad
-
-                <select>
-
-                    <option value="VIRTUAL">
-                        Virtual
-                    </option>
-
-                    <option value="PRESENCIAL">
-                        Presencial
-                    </option>
-
-                    <option value="MIXTA">
-                        Mixta
-                    </option>
-
-                </select>
-
-            </label>
-
-        </div>
-
-    </div>
-
-    <div class="form-section">
-
-        <h2>
-            📍 Ubicación
-        </h2>
-
-        <div class="form-grid">
-
-            <label>
-
-                Provincia
-
-                <input
-                    type="text">
-
-            </label>
-
-            <label>
-
-                Cantón
-
-                <input
-                    type="text">
-
-            </label>
-
-            <label>
-
-                Distrito
-
-                <input
-                    type="text">
-
-            </label>
-
-        </div>
-
-    </div>
-
-    <div class="form-section">
-
-        <h2>
-            💰 Información Comercial
-        </h2>
-
-        <div class="form-grid">
-
-            <label>
-
-                Tarifa Base
-
-                <input
-                    type="number">
-
-            </label>
-
-        </div>
-
-    </div>
-
-    <div class="form-actions">
-
-        <button
-            class="btn-cancelar"
-            type="button"
-            (click)="cancelar.emit()">
-
-            Cancelar
-
+          Seleccionar Imagen
         </button>
 
-        <button
-            class="btn-guardar"
-            type="submit">
+        <input
+          #fileInput
+          hidden
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          (change)="onImageSelected($event)"
+        />
+      </div>
 
-            🚀 Crear Profesional
+      <div class="image-preview-box">
+        @if (imagePreview()) {
+          <img class="image-preview" [src]="imagePreview()!" alt="Vista previa" />
+        } @else {
+          <div class="empty-preview">
+            <i class="fa-solid fa-image"></i>
 
-        </button>
-
+            <span> Sin imagen seleccionada </span>
+          </div>
+        }
+      </div>
     </div>
+  </div>
 
+  <div class="form-section">
+    <h2>
+      <i class="fa-solid fa-laptop-code"></i>
+
+      Tecnologías
+    </h2>
+
+    <p class="section-description">Seleccione las tecnologías dominadas por el profesional.</p>
+
+    <div class="chips-grid">
+      @for (tecnologia of tecnologias(); track tecnologia.id) {
+        <div
+          class="chip-card"
+          [class.chip-active]="isTecnologiaSelected(tecnologia.id)"
+          [style.background]="
+            isTecnologiaSelected(tecnologia.id) ? getTechColor(tecnologia.nombre) : ''
+          "
+          (click)="toggleTecnologia(tecnologia.id)"
+        >
+          {{ tecnologia.nombre }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h2>
+      <i class="fa-solid fa-award"></i>
+
+      Especialidades
+    </h2>
+
+    <p class="section-description">Seleccione las áreas en las que se especializa.</p>
+
+    <div class="chips-grid">
+      @for (especialidad of especialidades(); track especialidad.id) {
+        <div
+          class="chip-card especialidad"
+          [class.chip-active]="isEspecialidadSelected(especialidad.id)"
+          (click)="toggleEspecialidad(especialidad.id)"
+        >
+          {{ especialidad.nombre }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-section ubicacion">
+    <h2>
+      <i class="fa-solid fa-location-dot"></i>
+      Ubicación
+    </h2>
+
+    <div class="form-grid">
+      <label>
+        Provincia
+
+        <input type="text" [formField]="profesionalForm.provincia" />
+      </label>
+
+      <label>
+        Cantón
+
+        <input type="text" [formField]="profesionalForm.canton" />
+      </label>
+
+      <label>
+        Distrito
+
+        <input type="text" [formField]="profesionalForm.distrito" />
+      </label>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h2>
+      <i class="fa-solid fa-sack-dollar"></i>
+      Información Comercial
+    </h2>
+
+    <div class="form-grid-comercial">
+      <label>
+        Tarifa Base
+
+        <input
+          type="number"
+          [formField]="profesionalForm.tarifaBase"
+          (keydown)="soloEnteros($event)"
+        />
+
+        @if (profesionalForm.tarifaBase().touched() && profesionalForm.tarifaBase().invalid()) {
+          <p class="input-error">
+            {{ profesionalForm.tarifaBase().errors()[0].message }}
+          </p>
+        }
+      </label>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn-cancelar" type="button" (click)="cancelar.emit()">Cancelar</button>
+
+    <button class="btn-guardar" type="submit">
+      <i class="fa-solid fa-user-plus"></i>
+      Crear Profesional
+    </button>
+  </div>
 </form>

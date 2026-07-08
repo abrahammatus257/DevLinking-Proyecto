@@ -1,5 +1,7 @@
 import { prisma } from "../config/prisma";
 
+import { CreateProfesionalDto } from "../dtos/profesional.dto";
+
 export const perfilService = {
   // 1. Listar todos los perfiles profesionales activos/disponibles
   async listar() {
@@ -63,9 +65,49 @@ export const perfilService = {
     });
   },
 
-  crear(data: CreateProfesionalDto) {
-    return prisma.perfil.create({
-      data,
+  async crear(data: CreateProfesionalDto) {
+    return await prisma.perfilProfesional.create({
+      data: {
+        tituloProfesional: data.tituloProfesional,
+
+        descripcion: data.descripcion,
+
+        annosExperiencia: data.annosExperiencia,
+
+        modalidad: data.modalidad,
+
+        provincia: data.provincia,
+
+        canton: data.canton,
+
+        distrito: data.distrito,
+
+        tarifaBase: data.tarifaBase,
+
+        disponible: data.disponible,
+
+        imagenPerfil: data.imagenPerfil,
+
+        usuarioId: data.usuarioId,
+
+        tecnologias: {
+          create: data.tecnologiaIds.map((tecnologiaId) => ({
+            tecnologiaId,
+          })),
+        },
+
+        especialidades: {
+          create: data.especialidadIds.map((especialidadId) => ({
+            especialidadId,
+          })),
+        },
+      },
+
+      include: {
+        tecnologias: true,
+
+        especialidades: true,
+      },
     });
   },
 };

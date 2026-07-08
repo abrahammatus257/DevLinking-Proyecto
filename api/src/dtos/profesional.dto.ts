@@ -23,9 +23,9 @@ export const createProfesionalSchema = z.object({
 
   usuarioId: z.number().int().positive(),
 
-  tecnologiaIds: z.array(z.number().int().positive()).optional(),
+  tecnologiaIds: z.array(z.number().int().positive()),
 
-  especialidadIds: z.array(z.number().int().positive()).optional(),
+  especialidadIds: z.array(z.number().int().positive()),
 });
 
 export const updateProfesionalSchema = createProfesionalSchema.partial();
