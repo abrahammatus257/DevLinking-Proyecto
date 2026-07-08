@@ -1,1 +1,183 @@
-<p>profesionales-detalle works!</p>
+@if(loading()) {
+
+<div class="loading-container">
+
+    <h2>Cargando profesional...</h2>
+
+</div>
+
+}
+
+@else if(profesional(); as prof) {
+
+<div class="detail-container">
+
+    <button
+        class="btn-volver"
+        (click)="volver()">
+
+        ← Volver
+
+    </button>
+
+    <div class="detail-card">
+
+        <div class="profile-header">
+
+            <div class="image-side">
+
+                <img
+                    class="profile-image"
+                    [src]="getImageUrl(prof.imagenPerfil)"
+                    [alt]="prof.usuario.nombre_completo">
+
+            </div>
+
+            <div class="info-side">
+
+                <h1>
+
+                    {{ prof.usuario.nombre_completo }}
+
+                </h1>
+
+                <h2>
+
+                    {{ prof.tituloProfesional }}
+
+                </h2>
+
+                <span
+                    class="status-badge"
+                    [class.disponible]="prof.disponible"
+                    [class.no-disponible]="!prof.disponible">
+
+                    {{
+                    prof.disponible
+                    ? 'Disponible'
+                    : 'No Disponible'
+                    }}
+
+                </span>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <span class="label">
+
+                            Experiencia
+
+                        </span>
+
+                        <span class="value">
+
+                            {{ prof.annosExperiencia }} años
+
+                        </span>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <span class="label">
+
+                            Modalidad
+
+                        </span>
+
+                        <span class="value">
+
+                            {{ prof.modalidad }}
+
+                        </span>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <span class="label">
+
+                            Tarifa Base
+
+                        </span>
+
+                        <span class="value">
+
+                            ₡ {{ prof.tarifaBase }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="info-section">
+
+            <h3>Descripción</h3>
+
+            <p>
+
+                {{ prof.descripcion }}
+
+            </p>
+
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="info-section">
+
+            <h3>Ubicación</h3>
+
+            <p>
+
+                {{ prof.provincia }},
+                {{ prof.canton }},
+                {{ prof.distrito }}
+
+            </p>
+
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="info-section">
+
+            <h3>Tecnologías</h3>
+
+            <div class="tech-container">
+
+                @for(
+                tech of prof.tecnologias;
+                track tech.tecnologia.nombre
+                ){
+
+                <div
+                    class="tech-badge"
+                    [style.background]="
+                    getTechColor(
+                    tech.tecnologia.nombre
+                    )">
+
+                    {{ tech.tecnologia.nombre }}
+
+                </div>
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+}

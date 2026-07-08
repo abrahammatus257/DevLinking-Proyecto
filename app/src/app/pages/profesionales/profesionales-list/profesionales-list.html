@@ -1,1 +1,106 @@
-<p>profesionales-list works!</p>
+<div class="page-header">
+  <div>
+    <h1>Profesionales</h1>
+    <p>Gestión de profesionales registrados en DevLinking</p>
+  </div>
+</div>
+
+<div class="profesionales-panel">
+  <div class="panel-header">
+    <h2>Gestión de Profesionales</h2>
+
+    <div class="filters-container">
+      <input
+        #txtSearch
+        type="text"
+        placeholder="Buscar profesional..."
+        (input)="search.set(txtSearch.value)"
+      />
+
+      <select #modalidad (change)="filtrarPorModalidad(modalidad.value)">
+        <option value="">Todas las modalidades</option>
+
+        <option value="VIRTUAL">Virtual</option>
+
+        <option value="PRESENCIAL">Presencial</option>
+
+        <option value="MIXTA">Mixta</option>
+      </select>
+
+      <select #disponibilidad (change)="filtrarPorDisponibilidad(disponibilidad.value)">
+        <option value="">Todas</option>
+
+        <option value="true">Disponible</option>
+
+        <option value="false">No disponible</option>
+      </select>
+
+      <button class="btn-crear" (click)="crearProfesional()">+ Crear Profesional</button>
+    </div>
+  </div>
+
+  @if (profesionalesLista().length > 0) {
+    <div class="cards-container">
+      @for (profesional of profesionalesLista(); track profesional.id) {
+        <div class="profesional-card" (click)="verDetalle(profesional.id)">
+          <div class="image-container">
+            <img
+              [src]="getImageUrl(profesional.imagenPerfil)"
+              [alt]="profesional.usuario.nombre_completo"
+            />
+          </div>
+
+          <div class="card-body">
+            <div class="card-divider"></div>
+
+            <h2>
+              {{ profesional.usuario.nombre_completo }}
+            </h2>
+
+            <h3>
+              {{ profesional.tituloProfesional }}
+            </h3>
+
+            <div class="card-divider"></div>
+
+            <div class="info-row">
+              <span class="badge modalidad">
+                {{ profesional.modalidad }}
+              </span>
+            </div>
+
+            <div class="info-row">
+              <strong> ₡ {{ profesional.tarifaBase }} </strong>
+            </div>
+
+            <div class="info-row">
+              <span
+                class="badge"
+                [class.disponible]="profesional.disponible"
+                [class.no-disponible]="!profesional.disponible"
+              >
+                {{ profesional.disponible ? 'Disponible' : 'No disponible' }}
+              </span>
+            </div>
+
+            <div class="card-divider"></div>
+
+            <div class="tech-container">
+              @for (tech of profesional.tecnologias; track tech.tecnologia.nombre) {
+                <div class="tech-badge" [style.background]="getTechColor(tech.tecnologia.nombre)">
+                  {{ tech.tecnologia.nombre }}
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="empty-state">
+      <i class="fa-solid fa-user-tie"></i>
+
+      <h2>No hay profesionales registrados</h2>
+    </div>
+  }
+</div>

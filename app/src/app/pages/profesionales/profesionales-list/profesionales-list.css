@@ -1,0 +1,458 @@
+.page-header {
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+
+    font-size: 32px;
+
+    color: #111827;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.page-header p {
+
+    color: #475569;
+
+    font-size: 15px;
+}
+
+/* ==========================
+   PANEL PRINCIPAL
+========================== */
+
+.profesionales-panel {
+
+    background: white;
+
+    border: 2px solid #8b5cf6;
+
+    border-radius: 24px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 0 10px rgba(139, 92, 246, .18),
+        0 0 25px rgba(139, 92, 246, .10);
+}
+
+.panel-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.panel-header h2 {
+
+    margin: 0;
+
+    color: #6d28d9;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+/* ==========================
+   FILTROS
+========================== */
+
+.filters-container {
+
+    display: flex;
+
+    gap: 15px;
+}
+
+.filters-container input,
+.filters-container select {
+
+    background: #2f2f34;
+
+    color: white;
+
+    border: 2px solid #3d3d44;
+
+    border-radius: 14px;
+
+    padding: 12px 15px;
+
+    font-size: 14px;
+}
+
+.filters-container input {
+
+    width: 400px;
+}
+
+.filters-container input::placeholder {
+
+    color: #a1a1aa;
+}
+
+.filters-container input:focus,
+.filters-container select:focus {
+
+    outline: none;
+
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 15px rgba(
+            139,
+            92,
+            246,
+            .20
+        );
+}
+
+/* ==========================
+   GRID
+========================== */
+
+.cards-container {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(320px, 1fr)
+        );
+
+    gap: 25px;
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.profesional-card {
+
+    background: white;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+
+    box-shadow:
+        0 10px 25px rgba(
+            0,
+            0,
+            0,
+            .05
+        );
+}
+
+.profesional-card:hover {
+
+    transform:
+        translateY(-8px);
+
+    border-color: #8b5cf6;
+
+    box-shadow:
+
+        0 0 10px rgba(
+            139,
+            92,
+            246,
+            .30
+        ),
+
+        0 0 25px rgba(
+            139,
+            92,
+            246,
+            .18
+        ),
+
+        0 15px 35px rgba(
+            0,
+            0,
+            0,
+            .12
+        );
+}
+
+.profesional-card::before {
+
+    content: '';
+
+    display: block;
+
+    height: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7c3aed,
+            #a855f7
+        );
+}
+
+/* ==========================
+   IMAGEN
+========================== */
+
+.image-container {
+
+    height: 300px;
+    
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+.image-container img {
+
+    width: 80%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+/* ==========================
+   CONTENIDO
+========================== */
+
+.card-body {
+
+    padding: 16px 22px 22px 22px;
+}
+
+.card-body h2 {
+
+    color: #111827;
+
+    font-size: 24px;
+
+    margin-bottom: 8px;
+}
+
+.card-body h3 {
+
+    color: #475569;
+
+    font-size: 15px;
+
+    margin-bottom: 15px;
+}
+
+/* ==========================
+   INFO
+========================== */
+
+.info-row {
+
+    margin-bottom: 12px;
+}
+
+.info-row strong {
+
+    font-size: 24px;
+    font-weight: 800;
+    color: #111827;
+}
+
+/* ==========================
+   BADGES
+========================== */
+
+.badge {
+
+    display: inline-block;
+
+    padding: 8px 12px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.modalidad {
+
+    background: #dbeafe;
+
+    color: #2563eb;
+}
+
+.disponible {
+
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+.no-disponible {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+/* ==========================
+   TECNOLOGIAS
+========================== */
+
+.tech-container {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 15px;
+}
+
+.tech-badge {
+
+    color: white;
+
+    padding: 8px 12px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 4px 10px rgba(
+            0,
+            0,
+            0,
+            .12
+        );
+}
+
+/* ==========================
+   EMPTY
+========================== */
+
+.empty-state {
+
+    padding: 80px;
+
+    text-align: center;
+}
+
+.empty-state i {
+
+    font-size: 60px;
+
+    color: #8b5cf6;
+
+    margin-bottom: 15px;
+}
+
+.empty-state h2 {
+
+    color: #111827;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1200px) {
+
+    .panel-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .filters-container {
+
+        flex-direction: column;
+    }
+
+    .filters-container input {
+
+        width: 100%;
+    }
+}
+
+/* ==========================
+   DIVISOR PARA QUE SE VEA MEJOR
+========================== */
+
+.card-divider {
+
+    height: 1px;
+
+    background: #cbd5e1;
+
+    margin: 10px 0;
+}
+
+/* ==========================
+   PARA BOTÖN CREAR
+========================== */
+
+.btn-crear {
+
+    background: #22c55e;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 12px 18px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: .25s;
+}
+
+.btn-crear:hover {
+
+    background: #16a34a;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(
+            34,
+            197,
+            94,
+            .25
+        );
+}

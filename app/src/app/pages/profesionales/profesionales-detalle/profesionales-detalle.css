@@ -1,0 +1,403 @@
+/* ==========================
+   CONTENEDOR GENERAL
+========================== */
+
+.detail-container {
+
+    max-width: 1200px;
+
+    margin: 30px auto;
+
+    padding: 20px;
+}
+
+/* ==========================
+   BOTÓN VOLVER
+========================== */
+
+.btn-volver {
+
+    background: #8b5cf6;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 18px;
+
+    border-radius: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin-bottom: 20px;
+
+    transition: .25s;
+}
+
+.btn-volver:hover {
+
+    background: #7c3aed;
+}
+
+/* ==========================
+   CARD PRINCIPAL
+========================== */
+
+.detail-card {
+
+    background: white;
+
+    border: 2px solid #8b5cf6;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 0 15px rgba(139,92,246,.15),
+        0 0 30px rgba(139,92,246,.08);
+}
+
+/* ==========================
+   CABECERA
+========================== */
+
+.profile-header {
+
+    display: flex;
+
+    gap: 40px;
+
+    padding: 40px;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf5ff,
+            #ffffff
+        );
+}
+
+/* ==========================
+   IMAGEN
+========================== */
+
+.image-side {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    min-width: 220px;
+}
+
+.profile-image {
+
+    width: 180px;
+
+    height: 180px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 5px solid #8b5cf6;
+
+    background: white;
+
+    box-shadow:
+        0 10px 25px rgba(
+            139,
+            92,
+            246,
+            .15
+        );
+}
+
+/* ==========================
+   INFO PROFESIONAL
+========================== */
+
+.info-side {
+
+    flex: 1;
+}
+
+.info-side h1 {
+
+    font-size: 54px;
+
+    font-weight: 800;
+
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.info-side h2 {
+
+    font-size: 24px;
+
+    color: #475569;
+
+    margin-bottom: 18px;
+
+    font-weight: 600;
+}
+
+/* ==========================
+   DISPONIBILIDAD
+========================== */
+
+.status-badge {
+
+    display: inline-block;
+
+    padding: 10px 16px;
+
+    border-radius: 999px;
+
+    margin-bottom: 22px;
+
+    font-weight: 700;
+}
+
+.disponible {
+
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+.no-disponible {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+/* ==========================
+   ESTADÍSTICAS
+========================== */
+
+.stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(160px, 1fr)
+        );
+
+    gap: 15px;
+}
+
+.stat-card {
+
+    background: #faf5ff;
+
+    border: 1px solid #d8b4fe;
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    text-align: center;
+
+    transition: .25s;
+}
+
+.stat-card:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 20px rgba(
+            139,
+            92,
+            246,
+            .12
+        );
+}
+
+.label {
+
+    display: block;
+
+    font-size: 12px;
+
+    color: #64748b;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 8px;
+
+    font-weight: 700;
+}
+
+.value {
+
+    font-size: 30px;
+
+    color: #6d28d9;
+
+    font-weight: 800;
+}
+
+/* ==========================
+   DIVISORES
+========================== */
+
+.section-divider {
+
+    height: 1px;
+
+    margin: 0 30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(
+                139,
+                92,
+                246,
+                .45
+            ),
+            transparent
+        );
+}
+
+/* ==========================
+   SECCIONES
+========================== */
+
+.info-section {
+
+    margin: 15px 25px;
+
+    padding: 18px 22px;
+
+    background: #fafafa;
+
+    border-radius: 16px;
+
+    border: 1px solid #ececec;
+}
+
+.info-section h3 {
+
+    color: #6d28d9;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+}
+
+.info-section p {
+
+    color: #334155;
+
+    line-height: 1.8;
+
+    font-size: 16px;
+}
+
+/* ==========================
+   TECNOLOGÍAS
+========================== */
+
+.tech-container {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 10px;
+}
+
+.tech-badge {
+
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 999px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 6px 14px rgba(
+            0,
+            0,
+            0,
+            .15
+        );
+}
+
+/* ==========================
+   LOADING
+========================== */
+
+.loading-container {
+
+    text-align: center;
+
+    padding: 80px;
+}
+
+.loading-container h2 {
+
+    color: #6d28d9;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 900px) {
+
+    .profile-header {
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .info-side h1 {
+
+        font-size: 36px;
+    }
+
+    .info-side h2 {
+
+        font-size: 20px;
+    }
+
+    .stats-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .profile-image {
+
+        width: 150px;
+
+        height: 150px;
+    }
+}
