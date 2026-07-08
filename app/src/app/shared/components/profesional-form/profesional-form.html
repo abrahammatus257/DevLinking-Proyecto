@@ -102,6 +102,30 @@
 
   <div class="form-section">
     <h2>
+      <i class="fa-solid fa-user"></i>
+
+      Usuario Asociado
+    </h2>
+
+    <div class="form-grid-comercial">
+      <label>
+        Profesional
+
+        <select [formField]="profesionalForm.usuarioId">
+          <option [value]="0">Seleccione un profesional</option>
+
+          @for (usuario of usuarios(); track usuario.id) {
+            <option [value]="usuario.id">
+              {{ usuario.nombre_completo }}
+            </option>
+          }
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h2>
       <i class="fa-solid fa-laptop-code"></i>
 
       Tecnologías

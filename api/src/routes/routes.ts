@@ -7,6 +7,8 @@ import { PerfilRoutes } from "./perfil.routes";
 import { UsuarioRoutes } from "./usuario.routes";
 import { CitaRoutes } from "./cita.routes";       
 import { ResenaRoutes } from "./resena.routes";
+import { ImageRoutes } from "./image.routes";
+
 export class AppRoutes {
     static get routes(): Router {
         const router = Router();
@@ -20,6 +22,7 @@ export class AppRoutes {
         router.use("/usuario", UsuarioRoutes.routes); 
         router.use("/cita", CitaRoutes.routes);       
         router.use("/resena", ResenaRoutes.routes);
+        router.use("/image", ImageRoutes.routes);
         // Conforme hagás los demás CRUDS (Servicios, Citas, etc.), los vas metiendo aquí abajo igual que la profe:
         // router.use("/servicio", ServicioRoutes.routes);
 

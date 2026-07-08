@@ -8,6 +8,7 @@ export class UsuarioRoutes {
     const controller = new UsuarioController();
 
     router.get("/", asyncHandler(controller.listar));
+    router.get("/profesionales-disponibles", asyncHandler(controller.listarProfesionalesDisponibles));
     router.get("/:id", asyncHandler(controller.obtenerPorId));
     router.patch("/:id/estado", asyncHandler(controller.cambiarEstado));
     return router;

@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 
     filename: (req, file, cb) => {
         const extension = path.extname(file.originalname).toLowerCase();
-        const uniqueName = `videojuego${Date.now()}-${crypto.randomUUID()}${extension}`;
+        const uniqueName = `perfil-${Date.now()}-${crypto.randomUUID()}${extension}`;
 
         cb(null, uniqueName);
     },
@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
 const fileFilter = (
     req: Request,
     file: Express.Multer.File,
-    cb: multer.FileFilterCallback
+    cb: multer.FileFilterCallback,
 ) => {
     const extension = path.extname(file.originalname).toLowerCase();
 

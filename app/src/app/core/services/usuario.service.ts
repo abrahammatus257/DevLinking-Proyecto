@@ -3,39 +3,27 @@ import { inject, Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment.development';
 
-import {
-    ApiPaginatedResponse
-} from '../models/api-response.model';
+import { ApiPaginatedResponse } from '../models/api-response.model';
 
 import { Usuario } from '../models/usuario.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
+  private readonly http = inject(HttpClient);
 
-    private readonly http = inject(HttpClient);
+  private readonly apiUrl = `${environment.apiUrl}/usuario`;
 
-    private readonly apiUrl =
-        `${environment.apiUrl}/usuario`;
+  listar() {
+    return this.http.get<ApiPaginatedResponse<Usuario>>(this.apiUrl);
+  }
 
-    listar() {
+  cambiarEstado(id: number) {
+    return this.http.patch(`${this.apiUrl}/${id}/estado`, {});
+  }
 
-        return this.http.get<
-            ApiPaginatedResponse<Usuario>
-        >(this.apiUrl);
-
-    }
-
-
-    cambiarEstado(id: number) {
-
-        return this.http.patch(
-            `${this.apiUrl}/${id}/estado`,
-            {}
-        );
-
-    }
-
-
+  listarProfesionalesDisponibles() {
+    return this.http.get<ApiPaginatedResponse<Usuario>>(`${this.apiUrl}/profesionales-disponibles`);
+  }
 }

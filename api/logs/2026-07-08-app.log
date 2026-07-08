@@ -4,3 +4,8 @@
 {"error":{},"level":"error","message":"Error no controlado","method":"POST","path":"/api/perfil","timestamp":"2026-07-08 11:58:17.534"}
 {"error":{},"level":"error","message":"Error no controlado","method":"POST","path":"/api/perfil","timestamp":"2026-07-08 12:00:49.607"}
 {"error":{},"level":"error","message":"Error no controlado","method":"POST","path":"/api/perfil","timestamp":"2026-07-08 12:05:03.770"}
+{"level":"warn","message":"El id recibido no es válido","method":"GET","name":"BadRequestError","path":"/api/usuario/profesionales-disponibles","statusCode":400,"timestamp":"2026-07-08 17:16:58.629"}
+{"level":"warn","message":"El id recibido no es válido","method":"GET","name":"BadRequestError","path":"/api/usuario/profesionales-disponibles","statusCode":400,"timestamp":"2026-07-08 17:17:16.285"}
+{"level":"warn","message":"El id recibido no es válido","method":"GET","name":"BadRequestError","path":"/api/usuario/profesionales-disponibles","statusCode":400,"timestamp":"2026-07-08 17:20:29.364"}
+{"level":"warn","message":"El id recibido no es válido","method":"GET","name":"BadRequestError","path":"/api/usuario/profesionales-disponibles","statusCode":400,"timestamp":"2026-07-08 17:20:38.448"}
+{"level":"warn","message":"El id recibido no es válido","method":"GET","name":"BadRequestError","path":"/api/usuario/profesionales-disponibles","statusCode":400,"timestamp":"2026-07-08 17:20:48.156"}

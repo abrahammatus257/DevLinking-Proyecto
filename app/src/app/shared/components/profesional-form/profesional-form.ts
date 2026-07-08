@@ -16,6 +16,9 @@ import {
 } from '../../../core/models/profesional.model';
 import { TecnologiaService } from '../../../core/services/tecnologia.service';
 import { EspecialidadService } from '../../../core/services/especialidad.service';
+import { UsuarioService } from '../../../core/services/usuario.service';
+import { Usuario } from '../../../core/models/usuario.model';
+import { ImageService } from '../../../core/services/image.service';
 
 @Component({
   selector: 'app-profesional-form',
@@ -29,11 +32,17 @@ export class ProfesionalForm implements OnInit {
 
   private readonly especialidadService = inject(EspecialidadService);
 
+  private readonly usuarioService = inject(UsuarioService);
+
+  private readonly imageService = inject(ImageService);
+
   profesional = input<Profesional | null>(null);
 
   tecnologias = signal<Tecnologia[]>([]);
 
   especialidades = signal<Especialidad[]>([]);
+
+  usuarios = signal<Usuario[]>([]);
 
   imagePreview = signal<string | null>(null);
 
@@ -49,8 +58,8 @@ export class ProfesionalForm implements OnInit {
 
   ngOnInit(): void {
     this.cargarTecnologias();
-
     this.cargarEspecialidades();
+    this.cargarUsuarios();
   }
 
   profesionalModel = signal<ProfesionalFormModel>({
@@ -74,7 +83,7 @@ export class ProfesionalForm implements OnInit {
 
     imagenPerfil: '',
 
-    usuarioId: 0,
+    usuarioId: '0',
 
     tecnologiaIds: [],
 
@@ -129,6 +138,10 @@ export class ProfesionalForm implements OnInit {
     required(path.distrito, {
       message: 'El distrito es obligatorio',
     });
+
+    required(path.usuarioId, {
+      message: 'Seleccione un profesional',
+    });
   });
 
   isEdit = computed(() => this.profesional() !== null);
@@ -141,6 +154,14 @@ export class ProfesionalForm implements OnInit {
     this.marcarCamposComoTocados();
 
     if (this.formularioInvalido()) return;
+
+    const file = this.selectedImageFile();
+
+    if (file) {
+      this.subirImagenYGuardar(file);
+
+      return;
+    }
 
     const dto = this.buildDto();
 
@@ -183,6 +204,8 @@ export class ProfesionalForm implements OnInit {
     this.profesionalForm.distrito().markAsTouched();
 
     this.profesionalForm.tarifaBase().markAsTouched();
+
+    this.profesionalForm.usuarioId().markAsTouched();
   }
 
   private formularioInvalido(): boolean {
@@ -193,7 +216,8 @@ export class ProfesionalForm implements OnInit {
       this.profesionalForm.provincia().invalid() ||
       this.profesionalForm.canton().invalid() ||
       this.profesionalForm.distrito().invalid() ||
-      this.profesionalForm.tarifaBase().invalid()
+      this.profesionalForm.tarifaBase().invalid() ||
+      this.profesionalForm.usuarioId().invalid()
     );
   }
 
@@ -317,5 +341,43 @@ export class ProfesionalForm implements OnInit {
     };
 
     return colores[tecnologia] ?? '#8b5cf6';
+  }
+
+  private cargarUsuarios(): void {
+    this.usuarioService.listarProfesionalesDisponibles().subscribe({
+      next: (response) => {
+        this.usuarios.set(response.data);
+      },
+
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  private subirImagenYGuardar(file: File): void {
+    this.uploadingImage.set(true);
+
+    this.imageService.upload(file).subscribe({
+      next: (response) => {
+        this.profesionalModel.update((value) => ({
+          ...value,
+
+          imagenPerfil: response.fileName,
+        }));
+
+        const dto = this.buildDto();
+
+        this.guardar.emit(dto);
+      },
+
+      error: () => {
+        alert('No se pudo subir la imagen');
+      },
+
+      complete: () => {
+        this.uploadingImage.set(false);
+      },
+    });
   }
 }

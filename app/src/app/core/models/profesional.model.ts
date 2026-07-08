@@ -103,7 +103,7 @@ export interface ProfesionalFormModel {
 
   imagenPerfil: string;
 
-  usuarioId: number;
+  usuarioId: string;
 
   tecnologiaIds: number[];
 
