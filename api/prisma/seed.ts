@@ -28,10 +28,23 @@ async function main() {
     // 2. Creación de datos maestros
     await prisma.categoria.createMany({
         data: [
-            { nombre: "Desarrollo de Software", descripcion: "Creación de aplicaciones web, móviles y de escritorio." },
-            { nombre: "Diseño UI/UX", descripcion: "Diseño de interfaces y experiencia de usuario." },
-            { nombre: "Ciberseguridad", descripcion: "Auditorías de seguridad, pentesting y protección de redes." },
-            { nombre: "Soporte Técnico", descripcion: "Mantenimiento de hardware y software." },
+            {
+                nombre: "Desarrollo de Software",
+                descripcion: "Creación de aplicaciones web, móviles y de escritorio.",
+            },
+            {
+                nombre: "Diseño UI/UX",
+                descripcion: "Diseño de interfaces y experiencia de usuario.",
+            },
+            {
+                nombre: "Ciberseguridad",
+                descripcion:
+                    "Auditorías de seguridad, pentesting y protección de redes.",
+            },
+            {
+                nombre: "Soporte Técnico",
+                descripcion: "Mantenimiento de hardware y software.",
+            },
         ],
     });
 
@@ -58,129 +71,194 @@ async function main() {
 
     await prisma.usuario.createMany({
         data: [
-            { correo: "admin@devlinking.com", nombre_completo: "Administrador General", password: "hash_password", rol: Rol.ADMIN },
-            { correo: "cliente1@correo.com", nombre_completo: "Gabriel Mora", telefono: "8888-1111", password: "hash_password", rol: Rol.CLIENTE },
-            { correo: "cliente2@correo.com", nombre_completo: "Ashley Vargas", telefono: "8888-2222", password: "hash_password", rol: Rol.CLIENTE },
-            { correo: "profesional1@correo.com", nombre_completo: "Emanuel Rojas", telefono: "8888-3333", password: "hash_password", rol: Rol.PROFESIONAL },
-            { correo: "profesional2@correo.com", nombre_completo: "Fabián Arias", telefono: "8888-4444", password: "hash_password", rol: Rol.PROFESIONAL },
+            {
+                correo: "admin@devlinking.com",
+                nombre_completo: "Administrador General",
+                password: "hash_password",
+                rol: Rol.ADMIN,
+            },
+            {
+                correo: "cliente1@correo.com",
+                nombre_completo: "Gabriel Mora",
+                telefono: "8888-1111",
+                password: "hash_password",
+                rol: Rol.CLIENTE,
+            },
+            {
+                correo: "cliente2@correo.com",
+                nombre_completo: "Ashley Vargas",
+                telefono: "8888-2222",
+                password: "hash_password",
+                rol: Rol.CLIENTE,
+            },
+            {
+                correo: "profesional1@correo.com",
+                nombre_completo: "Emanuel Rojas",
+                telefono: "8888-3333",
+                password: "hash_password",
+                rol: Rol.PROFESIONAL,
+            },
+            {
+                correo: "profesional2@correo.com",
+                nombre_completo: "Fabián Arias",
+                telefono: "8888-4444",
+                password: "hash_password",
+                rol: Rol.PROFESIONAL,
+            },
+            {
+                correo: "profesional3@correo.com",
+                nombre_completo: "María Gómez",
+                telefono: "8888-5555",
+                password: "hash_password",
+                rol: Rol.PROFESIONAL,
+            },
+            {
+                correo: "profesional4@correo.com",
+                nombre_completo: "Daniel Castro",
+                telefono: "8888-6666",
+                password: "hash_password",
+                rol: Rol.PROFESIONAL,
+            },
+            {
+                correo: "profesional5@correo.com",
+                nombre_completo: "Laura Solís",
+                telefono: "8888-7777",
+                password: "hash_password",
+                rol: Rol.PROFESIONAL,
+            },
+            {
+                correo: "profesional6@correo.com",
+                nombre_completo: "Javier Ramírez",
+                telefono: "8888-8888",
+                password: "hash_password",
+                rol: Rol.PROFESIONAL,
+            },
         ],
     });
     console.log("📚 Datos maestros insertados.");
 
     // 3. Recuperar datos para mapeo indexado por propiedades únicas
-    const [categorias, especialidades, tecnologias, usuarios] = await Promise.all([
-        prisma.categoria.findMany(),
-        prisma.especialidad.findMany(),
-        prisma.tecnologia.findMany(),
-        prisma.usuario.findMany(),
-    ]);
+    const [categorias, especialidades, tecnologias, usuarios] = await Promise.all(
+        [
+            prisma.categoria.findMany(),
+            prisma.especialidad.findMany(),
+            prisma.tecnologia.findMany(),
+            prisma.usuario.findMany(),
+        ],
+    );
 
     const catMap = Object.fromEntries(categorias.map((c) => [c.nombre, c.id]));
-    const espMap = Object.fromEntries(especialidades.map((e) => [e.nombre, e.id]));
+    const espMap = Object.fromEntries(
+        especialidades.map((e) => [e.nombre, e.id]),
+    );
     const techMap = Object.fromEntries(tecnologias.map((t) => [t.nombre, t.id]));
     const userMap = Object.fromEntries(usuarios.map((u) => [u.correo, u.id]));
 
     // 4. Creación de Perfiles y Servicios con Relaciones
-    
+
     // Perfil Profesional 1 (Full-Stack / .NET)
     const perfil1 = await prisma.perfilProfesional.create({
         data: {
             tituloProfesional: "Ingeniero de Software Backend",
-            descripcion: "Especialista en arquitectura limpia y desarrollo con tecnologías Microsoft.",
+            descripcion:
+                "Especialista en arquitectura limpia y desarrollo con tecnologías Microsoft.",
             annosExperiencia: 3,
             modalidad: Modalidad.MIXTA,
             provincia: "Alajuela",
             canton: "Alajuela",
             distrito: "San José",
-            tarifaBase: 15000.00,
+            tarifaBase: 15000.0,
             usuarioId: userMap["profesional1@correo.com"],
             especialidades: {
                 create: [
                     { especialidadId: espMap["Desarrollo Backend"] },
-                    { especialidadId: espMap["Desarrollo Full-Stack"] }
-                ]
+                    { especialidadId: espMap["Desarrollo Full-Stack"] },
+                ],
             },
             tecnologias: {
                 create: [
                     { tecnologiaId: techMap[".NET / C#"] },
                     { tecnologiaId: techMap["ASP.NET Core MVC"] },
-                    { tecnologiaId: techMap["SQL Server"] }
-                ]
-            }
-        }
+                    { tecnologiaId: techMap["SQL Server"] },
+                ],
+            },
+        },
     });
 
     // Servicio ofrecido por Perfil 1
     const servicioWeb = await prisma.servicio.create({
         data: {
             nombre: "Creación de API REST con .NET",
-            descripcion: "Desarrollo de API robusta utilizando ASP.NET Core y SQL Server con buenas prácticas.",
-            precio: 120000.00,
+            descripcion:
+                "Desarrollo de API robusta utilizando ASP.NET Core y SQL Server con buenas prácticas.",
+            precio: 120000.0,
             duracionEstimada: 40,
             modalidad: Modalidad.VIRTUAL,
             categoriaId: catMap["Desarrollo de Software"],
             profesionalId: perfil1.id,
             especialidades: {
-                create: [{ especialidadId: espMap["Desarrollo Backend"] }]
+                create: [{ especialidadId: espMap["Desarrollo Backend"] }],
             },
             tecnologias: {
                 create: [
                     { tecnologiaId: techMap[".NET / C#"] },
-                    { tecnologiaId: techMap["SQL Server"] }
-                ]
-            }
-        }
+                    { tecnologiaId: techMap["SQL Server"] },
+                ],
+            },
+        },
     });
 
     // Perfil Profesional 2 (Frontend / React)
     const perfil2 = await prisma.perfilProfesional.create({
         data: {
             tituloProfesional: "Desarrollador Frontend & UI",
-            descripcion: "Apasionado por el diseño de interfaces limpias y desarrollo en React.",
+            descripcion:
+                "Apasionado por el diseño de interfaces limpias y desarrollo en React.",
             annosExperiencia: 2,
             modalidad: Modalidad.VIRTUAL,
             provincia: "San José",
             canton: "San José",
             distrito: "Carmen",
-            tarifaBase: 12000.00,
+            tarifaBase: 12000.0,
             usuarioId: userMap["profesional2@correo.com"],
             especialidades: {
-                create: [{ especialidadId: espMap["Desarrollo Frontend"] }]
+                create: [{ especialidadId: espMap["Desarrollo Frontend"] }],
             },
             tecnologias: {
                 create: [
                     { tecnologiaId: techMap["React"] },
-                    { tecnologiaId: techMap["Figma"] }
-                ]
-            }
-        }
+                    { tecnologiaId: techMap["Figma"] },
+                ],
+            },
+        },
     });
 
     // Servicio ofrecido por Perfil 2
     const servicioLanding = await prisma.servicio.create({
         data: {
             nombre: "Diseño y Desarrollo de Landing Page",
-            descripcion: "Diseño en Figma y posterior desarrollo en React para tu negocio.",
-            precio: 85000.00,
+            descripcion:
+                "Diseño en Figma y posterior desarrollo en React para tu negocio.",
+            precio: 85000.0,
             duracionEstimada: 20,
             modalidad: Modalidad.VIRTUAL,
             categoriaId: catMap["Diseño UI/UX"],
             profesionalId: perfil2.id,
             especialidades: {
-                create: [{ especialidadId: espMap["Desarrollo Frontend"] }]
+                create: [{ especialidadId: espMap["Desarrollo Frontend"] }],
             },
             tecnologias: {
                 create: [
                     { tecnologiaId: techMap["React"] },
-                    { tecnologiaId: techMap["Figma"] }
-                ]
-            }
-        }
+                    { tecnologiaId: techMap["Figma"] },
+                ],
+            },
+        },
     });
     console.log("👨‍💻 Perfiles y Servicios creados.");
 
     // 5. Creación de Citas (Órdenes de servicio)
-    
+
     // Cita 1 - Completada (Con reseña)
     const cita1 = await prisma.cita.create({
         data: {
@@ -197,12 +275,13 @@ async function main() {
             reseña: {
                 create: {
                     puntuacion: 5,
-                    comentario: "Excelente profesional, entendió perfectamente la arquitectura que buscábamos.",
+                    comentario:
+                        "Excelente profesional, entendió perfectamente la arquitectura que buscábamos.",
                     clienteId: userMap["cliente1@correo.com"],
-                    profesionalId: perfil1.id
-                }
-            }
-        }
+                    profesionalId: perfil1.id,
+                },
+            },
+        },
     });
 
     // Cita 2 - Pendiente
@@ -216,8 +295,8 @@ async function main() {
             monto: servicioLanding.precio,
             clienteId: userMap["cliente2@correo.com"],
             profesionalId: perfil2.id,
-            servicioId: servicioLanding.id
-        }
+            servicioId: servicioLanding.id,
+        },
     });
 
     console.log("✅ Seed completado con éxito.");
