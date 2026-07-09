@@ -38,4 +38,16 @@ export class PerfilController {
       data: perfil,
     });
   };
+
+  actualizar = async (request: Request, response: Response) => {
+    const id = parseId(request.params.id);
+
+    const perfil = await perfilService.actualizar(id, request.body);
+
+    return response.status(StatusCodes.OK).json({
+      success: true,
+
+      data: perfil,
+    });
+  };
 }

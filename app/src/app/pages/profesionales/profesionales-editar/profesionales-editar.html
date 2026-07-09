@@ -1,1 +1,6 @@
-<p>profesionales-editar works!</p>
+<app-profesional-form
+  [profesional]="profesional()"
+  [saving]="saving()"
+  (guardar)="guardar($event)"
+  (cancelar)="cancelar()">
+</app-profesional-form>

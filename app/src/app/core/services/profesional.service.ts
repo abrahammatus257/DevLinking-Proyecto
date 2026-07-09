@@ -7,7 +7,9 @@ import { Profesional } from '../models/profesional.model';
 
 import { ApiResponse } from '../models/api-response.model';
 import { ApiPaginatedResponse } from '../models/api-response.model';
-import {ProfesionalCreateDto} from '../models/profesional.model';
+import { ProfesionalCreateDto } from '../models/profesional.model';
+import { ProfesionalUpdateDto } from '../models/profesional.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +33,9 @@ export class ProfesionalService {
 
   crear(data: ProfesionalCreateDto) {
     return this.http.post(this.apiUrl, data);
+  }
+
+  actualizar(id: number, data: ProfesionalUpdateDto) {
+    return this.http.put(`${this.apiUrl}/${id}`, data);
   }
 }

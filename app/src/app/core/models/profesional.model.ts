@@ -60,6 +60,7 @@ export interface Profesional {
   };
 
   tecnologias: ProfesionalTecnologia[];
+  especialidades: ProfesionalEspecialidad[];
 
 }
 

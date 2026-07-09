@@ -2,6 +2,8 @@ import { prisma } from "../config/prisma";
 
 import { CreateProfesionalDto } from "../dtos/profesional.dto";
 
+import { UpdateProfesionalDto } from "../dtos/profesional.dto";
+
 export const perfilService = {
   // 1. Listar todos los perfiles profesionales activos/disponibles
   async listar() {
@@ -98,6 +100,66 @@ export const perfilService = {
 
         especialidades: {
           create: data.especialidadIds.map((especialidadId) => ({
+            especialidadId,
+          })),
+        },
+      },
+
+      include: {
+        tecnologias: true,
+
+        especialidades: true,
+      },
+    });
+  },
+
+  async actualizar(id: number, data: UpdateProfesionalDto) {
+    await prisma.profesionalTecnologia.deleteMany({
+      where: {
+        profesionalId: id,
+      },
+    });
+
+    await prisma.profesionalEspecialidad.deleteMany({
+      where: {
+        profesionalId: id,
+      },
+    });
+
+    return await prisma.perfilProfesional.update({
+      where: {
+        id,
+      },
+
+      data: {
+        tituloProfesional: data.tituloProfesional,
+
+        descripcion: data.descripcion,
+
+        annosExperiencia: data.annosExperiencia,
+
+        modalidad: data.modalidad,
+
+        provincia: data.provincia,
+
+        canton: data.canton,
+
+        distrito: data.distrito,
+
+        tarifaBase: data.tarifaBase,
+
+        disponible: data.disponible,
+
+        imagenPerfil: data.imagenPerfil,
+
+        tecnologias: {
+          create: (data.tecnologiaIds ?? []).map((tecnologiaId) => ({
+            tecnologiaId,
+          })),
+        },
+
+        especialidades: {
+          create: (data.especialidadIds ?? []).map((especialidadId) => ({
             especialidadId,
           })),
         },

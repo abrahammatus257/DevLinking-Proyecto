@@ -3,12 +3,11 @@
 ========================== */
 
 .detail-container {
+  max-width: 1200px;
 
-    max-width: 1200px;
+  margin: 30px auto;
 
-    margin: 30px auto;
-
-    padding: 20px;
+  padding: 20px;
 }
 
 /* ==========================
@@ -16,29 +15,27 @@
 ========================== */
 
 .btn-volver {
+  background: #8b5cf6;
 
-    background: #8b5cf6;
+  color: white;
 
-    color: white;
+  border: none;
 
-    border: none;
+  padding: 12px 18px;
 
-    padding: 12px 18px;
+  border-radius: 14px;
 
-    border-radius: 14px;
+  font-weight: 600;
 
-    font-weight: 600;
+  cursor: pointer;
 
-    cursor: pointer;
+  margin-bottom: 20px;
 
-    margin-bottom: 20px;
-
-    transition: .25s;
+  transition: 0.25s;
 }
 
 .btn-volver:hover {
-
-    background: #7c3aed;
+  background: #7c3aed;
 }
 
 /* ==========================
@@ -46,18 +43,17 @@
 ========================== */
 
 .detail-card {
+  background: white;
 
-    background: white;
+  border: 2px solid #8b5cf6;
 
-    border: 2px solid #8b5cf6;
+  border-radius: 28px;
 
-    border-radius: 28px;
+  overflow: hidden;
 
-    overflow: hidden;
-
-    box-shadow:
-        0 0 15px rgba(139,92,246,.15),
-        0 0 30px rgba(139,92,246,.08);
+  box-shadow:
+    0 0 15px rgba(139, 92, 246, 0.15),
+    0 0 30px rgba(139, 92, 246, 0.08);
 }
 
 /* ==========================
@@ -65,21 +61,15 @@
 ========================== */
 
 .profile-header {
+  display: flex;
 
-    display: flex;
+  gap: 40px;
 
-    gap: 40px;
+  padding: 40px;
 
-    padding: 40px;
+  align-items: center;
 
-    align-items: center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #faf5ff,
-            #ffffff
-        );
+  background: linear-gradient(135deg, #faf5ff, #ffffff);
 }
 
 /* ==========================
@@ -87,37 +77,29 @@
 ========================== */
 
 .image-side {
+  display: flex;
 
-    display: flex;
+  justify-content: center;
 
-    justify-content: center;
+  align-items: center;
 
-    align-items: center;
-
-    min-width: 220px;
+  min-width: 220px;
 }
 
 .profile-image {
+  width: 180px;
 
-    width: 180px;
+  height: 180px;
 
-    height: 180px;
+  border-radius: 50%;
 
-    border-radius: 50%;
+  object-fit: cover;
 
-    object-fit: cover;
+  border: 5px solid #8b5cf6;
 
-    border: 5px solid #8b5cf6;
+  background: white;
 
-    background: white;
-
-    box-shadow:
-        0 10px 25px rgba(
-            139,
-            92,
-            246,
-            .15
-        );
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.15);
 }
 
 /* ==========================
@@ -125,30 +107,27 @@
 ========================== */
 
 .info-side {
-
-    flex: 1;
+  flex: 1;
 }
 
 .info-side h1 {
+  font-size: 54px;
 
-    font-size: 54px;
+  font-weight: 800;
 
-    font-weight: 800;
+  color: #111827;
 
-    color: #111827;
-
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .info-side h2 {
+  font-size: 24px;
 
-    font-size: 24px;
+  color: #475569;
 
-    color: #475569;
+  margin-bottom: 18px;
 
-    margin-bottom: 18px;
-
-    font-weight: 600;
+  font-weight: 600;
 }
 
 /* ==========================
@@ -156,30 +135,27 @@
 ========================== */
 
 .status-badge {
+  display: inline-block;
 
-    display: inline-block;
+  padding: 10px 16px;
 
-    padding: 10px 16px;
+  border-radius: 999px;
 
-    border-radius: 999px;
+  margin-bottom: 22px;
 
-    margin-bottom: 22px;
-
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .disponible {
+  background: #dcfce7;
 
-    background: #dcfce7;
-
-    color: #15803d;
+  color: #15803d;
 }
 
 .no-disponible {
+  background: #fee2e2;
 
-    background: #fee2e2;
-
-    color: #dc2626;
+  color: #dc2626;
 }
 
 /* ==========================
@@ -187,70 +163,55 @@
 ========================== */
 
 .stats-grid {
+  display: grid;
 
-    display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
 
-    grid-template-columns:
-        repeat(
-            3,
-            minmax(160px, 1fr)
-        );
-
-    gap: 15px;
+  gap: 15px;
 }
 
 .stat-card {
+  background: #faf5ff;
 
-    background: #faf5ff;
+  border: 1px solid #d8b4fe;
 
-    border: 1px solid #d8b4fe;
+  border-radius: 18px;
 
-    border-radius: 18px;
+  padding: 18px;
 
-    padding: 18px;
+  text-align: center;
 
-    text-align: center;
-
-    transition: .25s;
+  transition: 0.25s;
 }
 
 .stat-card:hover {
+  transform: translateY(-3px);
 
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 10px 20px rgba(
-            139,
-            92,
-            246,
-            .12
-        );
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.12);
 }
 
 .label {
+  display: block;
 
-    display: block;
+  font-size: 12px;
 
-    font-size: 12px;
+  color: #64748b;
 
-    color: #64748b;
+  text-transform: uppercase;
 
-    text-transform: uppercase;
+  letter-spacing: 1px;
 
-    letter-spacing: 1px;
+  margin-bottom: 8px;
 
-    margin-bottom: 8px;
-
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .value {
+  font-size: 30px;
 
-    font-size: 30px;
+  color: #6d28d9;
 
-    color: #6d28d9;
-
-    font-weight: 800;
+  font-weight: 800;
 }
 
 /* ==========================
@@ -258,23 +219,11 @@
 ========================== */
 
 .section-divider {
+  height: 1px;
 
-    height: 1px;
+  margin: 0 30px;
 
-    margin: 0 30px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(
-                139,
-                92,
-                246,
-                .45
-            ),
-            transparent
-        );
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.45), transparent);
 }
 
 /* ==========================
@@ -282,36 +231,33 @@
 ========================== */
 
 .info-section {
+  margin: 15px 25px;
 
-    margin: 15px 25px;
+  padding: 18px 22px;
 
-    padding: 18px 22px;
+  background: #fafafa;
 
-    background: #fafafa;
+  border-radius: 16px;
 
-    border-radius: 16px;
-
-    border: 1px solid #ececec;
+  border: 1px solid #ececec;
 }
 
 .info-section h3 {
+  color: #6d28d9;
 
-    color: #6d28d9;
+  font-size: 22px;
 
-    font-size: 22px;
+  font-weight: 700;
 
-    font-weight: 700;
-
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .info-section p {
+  color: #334155;
 
-    color: #334155;
+  line-height: 1.8;
 
-    line-height: 1.8;
-
-    font-size: 16px;
+  font-size: 16px;
 }
 
 /* ==========================
@@ -319,35 +265,27 @@
 ========================== */
 
 .tech-container {
+  display: flex;
 
-    display: flex;
+  flex-wrap: wrap;
 
-    flex-wrap: wrap;
+  gap: 12px;
 
-    gap: 12px;
-
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .tech-badge {
+  color: white;
 
-    color: white;
+  padding: 12px 18px;
 
-    padding: 12px 18px;
+  border-radius: 999px;
 
-    border-radius: 999px;
+  font-size: 14px;
 
-    font-size: 14px;
+  font-weight: 700;
 
-    font-weight: 700;
-
-    box-shadow:
-        0 6px 14px rgba(
-            0,
-            0,
-            0,
-            .15
-        );
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
 /* ==========================
@@ -355,15 +293,13 @@
 ========================== */
 
 .loading-container {
+  text-align: center;
 
-    text-align: center;
-
-    padding: 80px;
+  padding: 80px;
 }
 
 .loading-container h2 {
-
-    color: #6d28d9;
+  color: #6d28d9;
 }
 
 /* ==========================
@@ -371,33 +307,64 @@
 ========================== */
 
 @media (max-width: 900px) {
+  .profile-header {
+    flex-direction: column;
 
-    .profile-header {
+    text-align: center;
+  }
 
-        flex-direction: column;
+  .info-side h1 {
+    font-size: 36px;
+  }
 
-        text-align: center;
-    }
+  .info-side h2 {
+    font-size: 20px;
+  }
 
-    .info-side h1 {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 
-        font-size: 36px;
-    }
+  .profile-image {
+    width: 150px;
 
-    .info-side h2 {
+    height: 150px;
+  }
+}
 
-        font-size: 20px;
-    }
+.btn-editar {
 
-    .stats-grid {
+    display: inline-flex;
 
-        grid-template-columns: 1fr;
-    }
+    align-items: center;
 
-    .profile-image {
+    gap: 6px;
 
-        width: 150px;
+    margin-left: 10px;
 
-        height: 150px;
-    }
+    padding: 10px 16px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: white;
+
+    color: #8b5cf6;
+
+    border: 2px solid #8b5cf6;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+ .btn-editar:hover {
+
+    background: #8b5cf6;
+
+    color: white;
+
 }

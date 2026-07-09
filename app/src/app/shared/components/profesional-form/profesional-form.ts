@@ -19,6 +19,7 @@ import { EspecialidadService } from '../../../core/services/especialidad.service
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { Usuario } from '../../../core/models/usuario.model';
 import { ImageService } from '../../../core/services/image.service';
+import { ProfesionalService } from '../../../core/services/profesional.service';
 
 @Component({
   selector: 'app-profesional-form',
@@ -28,6 +29,8 @@ import { ImageService } from '../../../core/services/image.service';
   styleUrl: './profesional-form.css',
 })
 export class ProfesionalForm implements OnInit {
+  private readonly profesionalService = inject(ProfesionalService);
+
   private readonly tecnologiaService = inject(TecnologiaService);
 
   private readonly especialidadService = inject(EspecialidadService);
@@ -168,6 +171,49 @@ export class ProfesionalForm implements OnInit {
     console.log('Formulario válido:', dto);
 
     this.guardar.emit(dto);
+  }
+
+  constructor() {
+    effect(() => {
+      const profesional = this.profesional();
+
+      if (!profesional) {
+        return;
+      }
+
+      this.profesionalModel.set({
+        tituloProfesional: profesional.tituloProfesional,
+
+        descripcion: profesional.descripcion ?? '',
+
+        annosExperiencia: profesional.annosExperiencia,
+
+        modalidad: profesional.modalidad,
+
+        provincia: profesional.provincia,
+
+        canton: profesional.canton,
+
+        distrito: profesional.distrito,
+
+        tarifaBase: Number(profesional.tarifaBase),
+
+        disponible: profesional.disponible,
+
+        imagenPerfil: profesional.imagenPerfil,
+
+        usuarioId: profesional.usuarioId.toString(),
+
+        tecnologiaIds: profesional.tecnologias.map((item) => item.tecnologiaId),
+
+        especialidadIds: profesional.especialidades.map((item) => item.especialidadId),
+      });
+
+      if (profesional.imagenPerfil) {
+        this.imagePreview.set(this.profesionalService.getImageUrl(profesional.imagenPerfil));
+      }
+      
+    });
   }
 
   soloEnteros(event: KeyboardEvent): void {

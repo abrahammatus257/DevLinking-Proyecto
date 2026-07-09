@@ -95,4 +95,8 @@ export class ProfesionalesDetalle implements OnInit {
 
     return colores[tecnologia] ?? '#64748b';
   }
+
+  editar(): void {
+    this.router.navigate(['/profesionales', 'editar', this.profesional()?.id]);
+  }
 }

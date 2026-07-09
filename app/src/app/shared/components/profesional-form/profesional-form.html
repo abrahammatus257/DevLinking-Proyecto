@@ -1,6 +1,6 @@
 <form (submit)="$event.preventDefault(); submit()">
   <div class="form-header">
-    <h1>Crear Profesional</h1>
+    <h1>Gestión de Profesional</h1>
 
     <p>Registra un nuevo profesional en DevLinking</p>
   </div>
@@ -107,21 +107,27 @@
       Usuario Asociado
     </h2>
 
-    <div class="form-grid-comercial">
+    @if (isEdit()) {
+      <label>
+        Profesional
+
+        <input type="text" [value]="profesional()?.usuario?.nombre_completo" readonly />
+      </label>
+    } @else {
       <label>
         Profesional
 
         <select [formField]="profesionalForm.usuarioId">
-          <option [value]="0">Seleccione un profesional</option>
+          <option value="0">Seleccione un profesional</option>
 
           @for (usuario of usuarios(); track usuario.id) {
-            <option [value]="usuario.id">
+            <option [value]="usuario.id.toString()">
               {{ usuario.nombre_completo }}
             </option>
           }
         </select>
       </label>
-    </div>
+    }
   </div>
 
   <div class="form-section">
