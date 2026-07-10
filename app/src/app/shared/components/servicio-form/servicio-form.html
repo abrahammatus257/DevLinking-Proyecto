@@ -1,0 +1,99 @@
+<form (submit)="$event.preventDefault(); submit()">
+    <div class="form-header">
+        <h1>{{ isEdit() ? 'Editar Servicio' : 'Nuevo Servicio' }}</h1>
+        <p>Gestiona las características del servicio ofrecido</p>
+    </div>
+
+<div class="form-section">
+        <h2>Información del Servicio</h2>
+        <div class="form-grid-profesional">
+            <label>
+                Nombre del Servicio
+                <input type="text" [formField]="servicioForm.nombre" />
+            </label>
+
+            <label>
+                Precio
+                <input type="number" [formField]="servicioForm.precio" />
+            </label>
+
+            <label>
+                Modalidad
+                <select [formField]="servicioForm.modalidad">
+                    <option value="VIRTUAL">Virtual</option>
+                    <option value="PRESENCIAL">Presencial</option>
+                    <option value="MIXTA">Mixta</option>
+                </select>
+            </label>
+
+            <!-- CAMPO NUEVO: DURACIÓN ESTIMADA -->
+            <label>
+                Duración Estimada (Horas)
+                <input type="number" [formField]="servicioForm.duracionEstimada" />
+            </label>
+
+            <!-- CAMPO NUEVO: CATEGORÍA -->
+            <label>
+                Categoría
+                <select [formField]="servicioForm.categoriaId">
+                    <option value="0" disabled selected>Seleccione una categoría</option>
+                    @for (cat of categorias(); track cat.id) {
+                        <option [value]="cat.id">{{ cat.nombre }}</option>
+                    }
+                </select>
+            </label>
+
+            <!-- CAMPO NUEVO: PROFESIONAL (Si aplica elegirlo en este form, si no lo puedes dejar oculto o por defecto) -->
+            <label>
+                Profesional
+                <select [formField]="servicioForm.profesionalId">
+                    <option value="0" disabled selected>Seleccione el profesional</option>
+                    @for (prof of profesionales(); track prof.id) {
+                        <!-- Mostramos el nombre completo del usuario ligado al perfil profesional -->
+                        <option [value]="prof.id">
+                            {{ prof.usuario?.nombre_completo || 'Profesional ' + prof.id }}
+                        </option>
+                    }
+                </select>
+            </label>
+
+            <label class="full-width">
+                Descripción
+                <textarea rows="4" [formField]="servicioForm.descripcion"></textarea>
+            </label>
+        </div>
+    </div>
+
+    <!-- Tecnologías -->
+    <div class="form-section">
+        <h2>Tecnologías Asociadas</h2>
+        <div class="chips-grid">
+            @for (tech of tecnologias(); track tech.id) {
+            <div class="chip-card" [class.chip-active]="isTecnologiaSelected(tech.id)"
+                (click)="toggleTecnologia(tech.id)">
+                {{ tech.nombre }}
+            </div>
+            }
+        </div>
+    </div>
+
+    <!-- Especialidades -->
+    <div class="form-section">
+        <h2>Especialidades Relacionadas</h2>
+        <div class="chips-grid">
+            @for (esp of especialidades(); track esp.id) {
+            <div class="chip-card especialidad" [class.chip-active]="isEspecialidadSelected(esp.id)"
+                (click)="toggleEspecialidad(esp.id)">
+                {{ esp.nombre }}
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button class="btn-cancelar" type="button" (click)="cancelar.emit()">Cancelar</button>
+        <button class="btn-guardar" type="submit" [disabled]="saving()">
+            {{ isEdit() ? 'Guardar Cambios' : 'Crear Servicio' }}
+        </button>
+    </div>
+</form>

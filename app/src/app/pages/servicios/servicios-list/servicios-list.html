@@ -1,1 +1,122 @@
-<p>servicios-list works!</p>
+<div class="page-header">
+    <div>
+        <h1>Servicios</h1>
+        <p>Administración del catálogo de servicios de desarrollo y consultoría</p>
+    </div>
+</div>
+
+<div class="usuarios-container">
+    <div class="usuarios-header">
+        <h3>Gestión de Servicios</h3>
+
+        <div class="header-filters">
+            <!-- 1. BÚSQUEDA POR NOMBRE -->
+            <div class="search-container">
+                <label>Buscar servicio</label>
+                <input type="text" placeholder="Escriba el nombre..." #txtSearch (input)="search.set(txtSearch.value)">
+            </div>
+
+            <!-- 2. FILTRO POR CATEGORÍA -->
+            <div class="filters">
+                <label>Categoría</label>
+                <select #categoria (change)="filtrarPorCategoria(categoria.value)">
+                    <option value="">Todas</option>
+                    @for (cat of categorias(); track cat.id) {
+                        <option [value]="cat.id">{{ cat.nombre }}</option>
+                    }
+                </select>
+            </div>
+
+            <!-- 3. FILTRO POR MODALIDAD -->
+            <div class="filters">
+                <label>Modalidad</label>
+                <select #modalidad (change)="filtrarPorModalidad(modalidad.value)">
+                    <option value="">Todas</option>
+                    <option value="VIRTUAL">Virtual</option>
+                    <option value="PRESENCIAL">Presencial</option>
+                    <option value="MIXTA">Mixta</option>
+                </select>
+            </div>
+
+            <!-- 4. FILTRO POR RANGO DE PRECIO -->
+            <div class="filters">
+                <label>Precio Máximo (₡)</label>
+                <input type="number" placeholder="Ej: 50000" #txtPrecio (input)="filtrarPorPrecio(txtPrecio.value)">
+            </div>
+
+            <!-- FILTRO POR ESTADO (Mantenido) -->
+            <div class="filters">
+                <label>Estado</label>
+                <select #estado (change)="filtrarPorEstado(estado.value)">
+                    <option value="">Todos</option>
+                    <option value="ACTIVO">Activo</option>
+                    <option value="INACTIVO">Inactivo</option>
+                </select>
+            </div>
+
+            <!-- BOTÓN CREAR (Dentro del header-filters para conservar alineación) -->
+            <a routerLink="crear" class="btn-crear">
+                <i class="fa-solid fa-plus"></i> Nuevo Servicio
+            </a>
+        </div>
+    </div> <!-- Cierre correcto de usuarios-header -->
+
+    @if (serviciosFiltrados().length > 0) {
+        <div class="services-grid">
+            @for (servicio of serviciosFiltrados(); track servicio.id) {
+                <div class="service-item-card">
+                    
+                    <div class="card-image-wrapper">
+                        <img 
+                            [src]="getImageUrl(servicio.imagenPortada)" 
+                            [alt]="servicio.nombre" 
+                            class="card-img"
+                        />
+                        <span class="category-badge">
+                            {{ servicio.categoria.nombre }}
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+                        <h4>{{ servicio.nombre }}</h4>
+                        <p>{{ servicio.descripcion || 'Sin descripción disponible.' }}</p>
+
+                        <div class="card-details">
+                            <div class="detail-block">
+                                <span class="lbl">Inversión</span>
+                                <span class="val price">₡{{ servicio.precio }}</span>
+                            </div>
+                            <div class="detail-block">
+                                <span class="lbl">Modalidad</span>
+                                <span class="val">{{ servicio.modalidad }}</span>
+                            </div>
+                        </div>
+
+                        <div class="card-status-row">
+                            <span 
+                                class="status-indicator" 
+                                [class.active]="servicio.estado === 'ACTIVO'"
+                                [class.inactive]="servicio.estado === 'INACTIVO'"
+                                (click)="confirmarCambioEstado(servicio.id)"
+                                title="Click para cambiar estado"
+                            >
+                                ● {{ servicio.estado }}
+                            </span>
+
+                            <a [routerLink]="['/servicios', servicio.id]" class="btn-detalle">
+                                Ver Detalle <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    } @else {
+        <div class="empty-state">
+            <i class="fa-solid fa-briefcase"></i>
+            <h2>No hay servicios disponibles</h2>
+            <p>Cuando existan servicios registrados en la plataforma aparecerán aquí.</p>
+        </div>
+    }
+</div>

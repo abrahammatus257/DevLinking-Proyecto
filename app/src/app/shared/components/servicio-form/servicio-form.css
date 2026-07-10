@@ -1,0 +1,152 @@
+form {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.form-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 1rem;
+}
+
+.form-header h1 {
+    font-size: 1.75rem;
+    color: #111827;
+    margin: 0;
+}
+
+.form-header p {
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+.form-section {
+    margin-bottom: 2rem;
+}
+
+.form-section h2 {
+    font-size: 1.25rem;
+    color: #374151;
+    margin-bottom: 1rem;
+}
+
+.form-grid-profesional {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+input, select, textarea {
+  padding: 0.625rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background-color: #ffffff; /* Forzamos fondo blanco */
+  color: #1f2937 !important;  /* ¡ESTO REPARA EL TEXTO! Forzamos un gris oscuro legible */
+  transition: border-color 0.15s ease;
+}
+input:disabled, select:disabled, textarea:disabled {
+  background-color: #f3f4f6;
+  color: #4b5563 !important; /* Gris intermedio legible */
+  cursor: not-allowed;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Rejilla de Chips */
+.chips-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.chip-card {
+    padding: 0.5rem 1rem;
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.chip-card:hover {
+    background-color: #e5e7eb;
+}
+
+.chip-active {
+    background-color: #3b82f6 !important;
+    color: white;
+    border-color: #2563eb;
+}
+
+.chip-card.especialidad.chip-active {
+    background-color: #10b981 !important;
+    border-color: #059669;
+}
+
+/* Botones de acción */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+}
+
+button {
+    padding: 0.625rem 1.25rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.15s ease;
+}
+
+.btn-cancelar {
+    background-color: #fff;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.btn-cancelar:hover {
+    background-color: #f9fafb;
+}
+
+.btn-guardar {
+    background-color: #3b82f6;
+    border: 1px solid #2563eb;
+    color: white;
+}
+
+.btn-guardar:hover:not(:disabled) {
+    background-color: #2563eb;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

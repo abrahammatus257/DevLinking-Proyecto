@@ -1,1 +1,111 @@
-<p>servicios-detalle works!</p>
+@if (loading()) {
+<div class="loading-container">
+    <h2>Cargando los detalles del servicio...</h2>
+</div>
+} @else if (servicio(); as serv) {
+<div class="detail-container">
+    <button class="btn-volver" (click)="volver()">← Volver al Catálogo</button>
+
+    <button class="btn-editar" (click)="editar()">
+        <i class="fa-solid fa-pen-to-square"></i>
+        Editar Servicio
+    </button>
+
+    <div class="service-card">
+        <!-- Encabezado del Servicio -->
+        <div class="service-header">
+            <div class="cover-side">
+                <img class="service-cover" [src]="getImageUrl(serv.imagenPortada)" [alt]="serv.nombre" />
+            </div>
+
+            <div class="info-side">
+                <span class="category-tag">
+                    <i class="fa-solid fa-layer-group"></i> {{ serv.categoria.nombre }}
+                </span>
+
+                <h1>{{ serv.nombre }}</h1>
+
+                <span class="status-badge" [class.activo]="serv.estado === 'ACTIVO'"
+                    [class.inactivo]="serv.estado === 'INACTIVO'">
+                    ● {{ serv.estado }}
+                </span>
+
+                <!-- Grid de Métricas Comerciales -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <span class="label">Inversión</span>
+                        <span class="value">₡{{ serv.precio }}</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <span class="label">Duración</span>
+                        <span class="value">{{ serv.duracionEstimada }} min</span>
+                    </div>
+
+                    <div class="metric-card">
+                        <span class="label">Modalidad</span>
+                        <span class="value" style="font-size: 18px;">{{ serv.modalidad }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Descripción -->
+        <div class="info-section">
+            <h3><i class="fa-solid fa-align-left"></i> Descripción del Servicio</h3>
+            <p>{{ serv.descripcion || 'Sin descripción detallada disponible actualmente.' }}</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Profesional Encargado -->
+        <div class="info-section">
+            <h3><i class="fa-solid fa-user-tie"></i> Profesional Asignado</h3>
+            <div class="professional-profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <div class="professional-info">
+                    <h4>{{ serv.profesional.usuario.nombre_completo }}</h4>
+                    <p>{{ serv.profesional.tituloProfesional }} — Experiencia: {{ serv.profesional.annosExperiencia }}
+                        años</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Especialidades Aplicadas -->
+        <div class="info-section">
+            <h3><i class="fa-solid fa-award"></i> Especialidades Cubiertas</h3>
+            <div class="badge-container">
+                @for (esp of serv.especialidades; track esp.especialidad.id) {
+                <div class="custom-badge specialty-badge">
+                    {{ esp.especialidad.nombre }}
+                </div>
+                } @empty {
+                <p style="color: #64748b; font-style: italic;">No se han asignado especialidades específicas.</p>
+                }
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Tecnologías Utilizadas -->
+        <div class="info-section">
+            <h3><i class="fa-solid fa-code"></i> Tecnologías Incorporadas</h3>
+            <div class="badge-container">
+                @for (tech of serv.tecnologias; track tech.tecnologia.nombre) {
+                <div class="custom-badge" [style.background]="getTechColor(tech.tecnologia.nombre)">
+                    {{ tech.tecnologia.nombre }}
+                </div>
+                } @empty {
+                <p style="color: #64748b; font-style: italic;">Este servicio no cuenta con tecnologías de desarrollo
+                    específicas.</p>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+}

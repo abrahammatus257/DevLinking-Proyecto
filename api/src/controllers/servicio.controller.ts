@@ -24,4 +24,32 @@ export class ServicioController {
         }
         return response.status(StatusCodes.OK).json({ success: true, data: servicio });
     };
+
+    crear = async (request: Request, response: Response) => {
+        const servicio = await servicioService.crear(request.body);
+        return response.status(StatusCodes.CREATED).json({
+            success: true,
+            data: servicio,
+        });
+    };
+
+    actualizar = async (request: Request, response: Response) => {
+        const id = parseId(request.params.id);
+        const servicio = await servicioService.actualizar(id, request.body);
+
+        return response.status(StatusCodes.OK).json({
+            success: true,
+            data: servicio,
+        });
+    };
+
+    cambiarEstado = async (request: Request, response: Response) => {
+        const id = parseId(request.params.id);
+        const resultado = await servicioService.cambiarEstado(id);
+
+        return response.status(StatusCodes.OK).json({
+            success: true,
+            data: resultado,
+        });
+    };
 }
