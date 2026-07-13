@@ -9,7 +9,7 @@ export class EspecialidadRoutes {
 
         router.get('/', asyncHandler(controller.listar));
         router.get('/:id', asyncHandler(controller.obtenerPorId));
-
+        router.patch("/:id/estado", asyncHandler(controller.cambiarEstado)); 
         return router;
     }
 }

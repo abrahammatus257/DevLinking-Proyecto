@@ -1,1 +1,83 @@
-<p>especialidades-lista works!</p>
+<div class="modulo-contenedor">
+    <!-- Encabezado del Módulo (Se mantiene intacto) -->
+    <div class="modulo-header">
+        <div class="header-info">
+            <div class="icono-wrapper">
+                <i class="fas fa-briefcase-medical"></i>
+            </div>
+            <div>
+                <h2>Gestión de Especialidades</h2>
+                <p>Visualiza, filtra y administra el estado de las especialidades médicas.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra de Filtros (Búsqueda y Estado vinculados a tus Signals) -->
+    <div class="filtros-container">
+        <div class="busqueda-wrapper">
+            <i class="fas fa-search"></i>
+            <!-- Usamos [(ngModel)] apuntando directo al Signal filtroNombre -->
+            <input type="text" 
+                   placeholder="Buscar especialidad por nombre..." 
+                   [(ngModel)]="filtroNombre" />
+        </div>
+
+        <div class="select-wrapper">
+            <i class="fas fa-filter"></i>
+            <!-- Usamos [(ngModel)] apuntando directo al Signal filtroEstado -->
+            <select [(ngModel)]="filtroEstado">
+                <option value="TODOS">Todos los estados</option>
+                <option value="ACTIVO">Activos</option>
+                <option value="INACTIVO">Inactivos</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Tabla de Datos -->
+    <div class="tabla-card">
+        <!-- Evaluamos la ejecución del computed con paréntesis () -->
+        @if (especialidadesFiltradas().length > 0) {
+        <div class="tabla-responsive">
+            <table class="tabla-moderna">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de la Especialidad</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Iteramos sobre la ejecución del computed con paréntesis () -->
+                    @for (esp of especialidadesFiltradas(); track esp.id) {
+                    <tr>
+                        <td><span class="txt-id">#{{ esp.id }}</span></td>
+                        <td><strong>{{ esp.nombre }}</strong></td>
+                        <td>
+                            <span class="badge" [ngClass]="esp.estado === 'ACTIVO' ? 'badge-activo' : 'badge-inactivo'">
+                                {{ esp.estado }}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-estado"
+                                [ngClass]="esp.estado === 'ACTIVO' ? 'btn-desactivar' : 'btn-activar'"
+                                (click)="confirmarCambioEstado(esp)"
+                                [title]="esp.estado === 'ACTIVO' ? 'Desactivar especialidad' : 'Activar especialidad'">
+                                <i [class]="esp.estado === 'ACTIVO' ? 'fas fa-toggle-on' : 'fas fa-toggle-off'"></i>
+                                {{ esp.estado === 'ACTIVO' ? 'Desactivar' : 'Activar' }}
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        } @else {
+        <!-- State cuando no hay registros -->
+        <div class="no-data">
+            <i class="fas fa-folder-open"></i>
+            <p>No se encontraron especialidades que coincidan con los filtros.</p>
+        </div>
+        }
+    </div>
+</div>

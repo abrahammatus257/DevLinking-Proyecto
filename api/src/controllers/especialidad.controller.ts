@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from "http-status-codes";
-import { especialidadService } from '../services/especialidad.service';
+import { especialidadService } from '../services/especialidad.service'; // Asegúrate de que apunte bien
+import { parseId } from "../utils/parse-id";
 
 export class EspecialidadController {
     listar = async (request: Request, response: Response, next: NextFunction) => {
@@ -12,17 +13,20 @@ export class EspecialidadController {
     };
 
     obtenerPorId = async (request: Request, response: Response, next: NextFunction) => {
-        const rawId = Array.isArray(request.params.id) ? request.params.id[0] : request.params.id;
-        const id = parseInt(rawId ?? '', 10);
-        if (isNaN(id)) {
-            return response.status(StatusCodes.BAD_REQUEST).json({ success: false, message: "ID inválido" });
-        }
-
+        const id = parseId(request.params.id);
         const especialidad = await especialidadService.obtenerPorId(id);
         if (!especialidad) {
             return response.status(StatusCodes.NOT_FOUND).json({ success: false, message: "Especialidad no encontrada" });
         }
-
         return response.status(StatusCodes.OK).json({ success: true, data: especialidad });
+    };
+
+    cambiarEstado = async (request: Request, response: Response) => {
+        const id = parseId(request.params.id);
+        const resultado = await especialidadService.cambiarEstado(id);
+        return response.status(StatusCodes.OK).json({
+            success: true,
+            data: resultado
+        });
     };
 }

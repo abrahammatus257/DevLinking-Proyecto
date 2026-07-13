@@ -1,0 +1,25 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
+import { ApiPaginatedResponse } from '../models/api-response.model';
+import { Cita } from '../models/cita.model';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class CitaService {
+    private readonly http = inject(HttpClient);
+    private readonly apiUrl = `${environment.apiUrl}/cita`;
+
+    listar() {
+        return this.http.get<ApiPaginatedResponse<Cita>>(this.apiUrl);
+    }
+
+    obtenerPorId(id: number) {
+        return this.http.get<ApiPaginatedResponse<Cita>>(`${this.apiUrl}/${id}`);
+    }
+
+    crear(cita: Partial<Cita>) {
+        return this.http.post<ApiPaginatedResponse<Cita>>(this.apiUrl, cita);
+    }
+}

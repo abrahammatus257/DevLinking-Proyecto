@@ -1,1 +1,124 @@
-<p>citas-detalle works!</p>
+<!-- Modal de Detalle de Cita Premium -->
+<div class="modal-overlay" *ngIf="cita" (click)="cerrar()">
+    <div class="detail-modal-card" (click)="$event.stopPropagation()">
+
+        <!-- Encabezado del Modal -->
+        <div class="modal-header-custom">
+            <div>
+                <h3 class="modal-title-custom">Detalle de la Sesión</h3>
+                <p class="modal-subtitle-custom">ID de Control: #{{ cita.id }}</p>
+            </div>
+            <button class="btn-close-modal" (click)="cerrar()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Cuerpo con la Información Organizada -->
+        <div class="modal-body-custom">
+
+            <!-- Sección: Estado y Monto -->
+            <div class="detail-row-highlight mb-4">
+                <div class="highlight-item">
+                    <span class="highlight-label">Estado Actual</span>
+                    <span class="custom-badge" [ngClass]="{
+            'badge-pendiente': cita.estado === 'PENDIENTE',
+            'badge-completada': cita.estado === 'COMPLETADA',
+            'badge-aceptada': cita.estado === 'ACEPTADA',
+            'badge-rechazada': cita.estado === 'RECHAZADA',
+            'badge-cancelada': cita.estado === 'CANCELADA'
+            }">{{ cita.estado }}</span>
+                </div>
+                <div class="highlight-item text-end">
+                    <span class="highlight-label">Monto de Inversión</span>
+                    <span class="monto-destacado">₡{{ cita.monto | number:'1.2-2' }}</span>
+                </div>
+            </div>
+
+            <!-- Sección: Participantes (Cliente vs Especialista) -->
+            <div class="detail-grid-two-cols mb-4">
+                <!-- Bloque Cliente -->
+                <div class="participant-box">
+                    <div class="box-header">
+                        <i class="fa-solid fa-user icon-pink"></i>
+                        <span>Información del Cliente</span>
+                    </div>
+                    <div class="box-content">
+                        <!-- Corregido según tu Prisma Include -->
+                        <h5 class="p-name">{{ cita.cliente?.nombre_completo }}</h5>
+                        <p class="p-sub">{{ cita.cliente?.correo }}</p>
+                    </div>
+                </div>
+
+                <!-- Bloque Especialista -->
+                <div class="participant-box">
+                    <div class="box-header">
+                        <i class="fa-solid fa-user-tie text-slate"></i>
+                        <span>Especialista Asignado</span>
+                    </div>
+                    <div class="box-content">
+                        <!-- Corregido usando el objeto usuario opcional -->
+                        <h5 class="p-name">{{ cita.profesional?.usuario?.nombre_completo || 'Profesional Asignado' }}</h5>
+                        <p class="p-sub text-pink">{{ cita.profesional?.tituloProfesional }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Detalles del Servicio y Agenda -->
+            <div class="info-list-container">
+
+                <!-- Servicio -->
+                <div class="info-list-item">
+                    <div class="info-item-left">
+                        <i class="fa-solid fa-laptop-code item-icon"></i>
+                        <div>
+                            <span class="item-title">Servicio Solicitado</span>
+                            <p class="item-value">{{ cita.servicio?.nombre }}</p>
+                        </div>
+                    </div>
+                    <span class="modality-tag" [ngClass]="cita.modalidad?.toLowerCase()">
+                        {{ cita.modalidad }}
+                    </span>
+                </div>
+
+                <!-- Fecha y Hora -->
+                <div class="info-list-item">
+                    <div class="info-item-left">
+                        <i class="fa-solid fa-calendar-days item-icon"></i>
+                        <div>
+                            <span class="item-title">Fecha Programada</span>
+                            <!-- Corregido a fechaCita usando el Pipe de Angular -->
+                            <p class="item-value">{{ cita.fechaCita | date:'dd/MM/yyyy' }}</p>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <span class="item-title">Horario</span>
+                        <!-- Corregido a horaInicio usando el Pipe en formato UTC -->
+                        <p class="item-value-alt">
+                            <i class="fa-regular fa-clock me-1"></i>
+                            {{ cita.horaInicio | date:'hh:mm a':'UTC' }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Descripción Opcional de la Cita (Si existe) -->
+                <div class="info-list-item" *ngIf="cita.descripcion">
+                    <div class="info-item-left">
+                        <i class="fa-solid fa-align-left item-icon"></i>
+                        <div>
+                            <span class="item-title">Notas / Descripción</span>
+                            <p class="item-value text-muted" style="font-size: 0.9rem;">{{ cita.descripcion }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Pie del Modal -->
+        <div class="modal-footer-custom">
+            <button class="btn-action-secondary" (click)="cerrar()">Regresar</button>
+        </div>
+
+    </div>
+</div>

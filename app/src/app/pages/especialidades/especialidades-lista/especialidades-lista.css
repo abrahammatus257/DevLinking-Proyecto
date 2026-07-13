@@ -1,0 +1,228 @@
+:root {
+    --color-primary: #f59e0b;
+    --color-primary-hover: #d97706;
+    --color-primary-light: #fef3c7;
+    --bg-body: #f8fafc;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.modulo-contenedor {
+    padding: 2rem;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+    background-color: var(--bg-body);
+    min-height: 100vh;
+}
+
+/* Encabezado */
+.modulo-header {
+    margin-bottom: 2rem;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icono-wrapper {
+    background-color: #f59e0b;
+    /* Color solicitado */
+    color: white;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.modulo-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    color: #0f172a;
+}
+
+.modulo-header p {
+    margin: 0.25rem 0 0 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Barra de Filtros */
+.filtros-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.busqueda-wrapper,
+.select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.busqueda-wrapper {
+    flex: 1;
+}
+
+.busqueda-wrapper i,
+.select-wrapper i {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-muted);
+}
+
+.busqueda-wrapper input,
+.select-wrapper select {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.busqueda-wrapper input:focus,
+.select-wrapper select:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+/* Tabla Card */
+.tabla-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.tabla-responsive {
+    overflow-x: auto;
+}
+
+.tabla-moderna {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.tabla-moderna th {
+    background-color: #f8fafc;
+    color: #475569;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    border-bottom: 2px solid #edf2f7;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.tabla-moderna td {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #edf2f7;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.tabla-moderna tbody tr:hover {
+    background-color: #fdfaf2;
+    /* Sutil tinte del color ámbar */
+}
+
+.txt-id {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Badges de Estado */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.badge-activo {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.badge-inactivo {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Botones de Acción */
+.text-center {
+    text-align: center;
+}
+
+.btn-estado {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.btn-desactivar {
+    background-color: #fff;
+    border-color: #fca5a5;
+    color: #dc2626;
+}
+
+.btn-desactivar:hover {
+    background-color: #fee2e2;
+}
+
+.btn-activar {
+    background-color: #fff;
+    border-color: #f59e0b;
+    /* Color corporativo para activar */
+    color: #d97706;
+}
+
+.btn-activar:hover {
+    background-color: #fef3c7;
+}
+
+/* No data state */
+.no-data {
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.no-data i {
+    font-size: 3rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+}
+
+.no-data p {
+    margin: 0;
+    font-size: 1rem;
+}

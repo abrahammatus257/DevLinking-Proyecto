@@ -1,1 +1,116 @@
-<p>citas-crear works!</p>
+<div class="form-container">
+  <!-- Encabezado de la página -->
+  <div class="form-header">
+    <div class="header-text">
+      <h2>Agendar Nueva Cita</h2>
+      <p>Completa el formulario para registrar un nuevo espacio en la agenda.</p>
+    </div>
+    <a routerLink="/citas" class="btn-secondary">
+      <i class="icon-back"></i> Volver a la lista
+    </a>
+  </div>
+
+  <!-- Alertas de Error -->
+  @if (errorMensaje()) {
+    <div class="alert-error">
+      <p>{{ errorMensaje() }}</p>
+    </div>
+  }
+
+  <!-- Formulario Principal -->
+  <form (ngSubmit)="registrarCita()" #citaForm="ngForm" class="appointment-form">
+    
+    <!-- SECCIÓN 1: Tiempo y Modalidad -->
+    <div class="form-section">
+      <h3>1. Fecha, Hora y Modalidad</h3>
+      <div class="form-grid-3">
+        <div class="form-group">
+          <label for="fecha">Fecha de la Cita *</label>
+          <input type="date" id="fecha" name="fecha" [(ngModel)]="fechaInput" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="hora">Hora de Inicio *</label>
+          <input type="time" id="hora" name="hora" [(ngModel)]="horaInput" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="modalidad">Modalidad *</label>
+          <select id="modalidad" name="modalidad" [(ngModel)]="modalidadInput" required class="form-control">
+            <option value="VIRTUAL">Virtual</option>
+            <option value="PRESENCIAL">Presencial</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: Participantes y Servicio -->
+    <div class="form-section">
+      <h3>2. Asignación de Servicio y Personal</h3>
+      <div class="form-grid-3">
+        <div class="form-group">
+          <label for="cliente">Cliente / Usuario *</label>
+          <select id="cliente" name="cliente" [(ngModel)]="clienteIdInput" required class="form-control">
+            <option [ngValue]="null" disabled selected>Selecciona un cliente...</option>
+            @for (c of clientes(); track c.id) {
+              <option [ngValue]="c.id">{{ c.nombre_completo }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="servicio">Servicio Requerido *</label>
+          <select id="servicio" name="servicio" [(ngModel)]="servicioIdInput" (change)="onServicioChange(servicioIdInput)" required class="form-control">
+            <option [ngValue]="null" disabled selected>Selecciona un servicio...</option>
+            @for (s of servicios(); track s.id) {
+              <option [ngValue]="s.id">{{ s.nombre }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="profesional">Especialista / Profesional *</label>
+          <select id="profesional" name="profesional" [(ngModel)]="profesionalIdInput" required class="form-control">
+            <option [ngValue]="null" disabled selected>Selecciona un especialista...</option>
+            @for (p of profesionales(); track p.id) {
+              <option [ngValue]="p.id">{{ p.usuario?.nombre_completo }}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: Detalles Finales -->
+    <div class="form-section">
+      <h3>3. Detalles del Pago y Notas</h3>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="monto">Monto / Tarifa *</label>
+          <div class="price-input-wrapper">
+            <span class="currency-symbol">₡</span>
+            <input type="number" id="monto" name="monto" [(ngModel)]="montoInput" required min="0" placeholder="0.00" class="form-control price-input" />
+          </div>
+          <small class="form-help">Se auto-rellena al elegir el servicio, pero podés ajustarlo manualmente.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion">Descripción o Notas Adicionales</label>
+          <textarea id="descripcion" name="descripcion" [(ngModel)]="descripcionInput" rows="3" placeholder="Detalles importantes sobre el motivo de la cita..." class="form-control"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="form-actions">
+      <a routerLink="/citas" class="btn-cancel">Cancelar</a>
+      <button type="submit" [disabled]="!citaForm.form.valid || guardando()" class="btn-submit">
+        @if (guardando()) {
+          <span class="spinner"></span> Guardando...
+        } @else {
+          Agendar Cita
+        }
+      </button>
+    </div>
+
+  </form>
+</div>

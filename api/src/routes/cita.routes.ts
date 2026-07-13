@@ -9,7 +9,7 @@ export class CitaRoutes {
 
         router.get('/', asyncHandler(controller.listar));
         router.get('/:id', asyncHandler(controller.obtenerPorId));
-
+        router.post("/", asyncHandler(controller.crear));
         return router;
     }
 }

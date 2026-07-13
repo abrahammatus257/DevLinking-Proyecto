@@ -1,9 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Cita } from '../../../core/models/cita.model';
 
 @Component({
   selector: 'app-citas-detalle',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './citas-detalle.html',
-  styleUrl: './citas-detalle.css',
+  styleUrls: ['./citas-detalle.css']
 })
-export class CitasDetalle {}
+export class CitasDetalle {
+  // Usamos el modelo real Cita en lugar de any
+  @Input() cita: Cita | null = null;
+  @Output() alCerrar = new EventEmitter<void>();
+
+  cerrar(): void {
+    this.alCerrar.emit();
+  }
+}

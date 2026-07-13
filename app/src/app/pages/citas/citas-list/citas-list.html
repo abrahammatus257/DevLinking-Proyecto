@@ -1,1 +1,148 @@
-<p>citas-list works!</p>
+<div class="citas-container fade-in">
+
+    <!-- Header de la sección -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <h2 class="section-title">Gestión de Citas</h2>
+            <p class="section-subtitle">Monitoreá, filtrá y controla las sesiones programadas de la plataforma.</p>
+        </div>
+        <button class="btn btn-nuevo" [routerLink]="['/citas/crear']">
+            <i class="fa-solid fa-plus me-2"></i> Programar Cita
+        </button>
+    </div>
+
+    <!-- Panel de Filtros Inteligentes Premium -->
+    <div class="filter-card mb-4">
+        <div class="filter-grid">
+            <div class="filter-item search-box">
+                <i class="fa-solid fa-magnifying-glass filter-icon"></i>
+                <input type="text" placeholder="Buscar por cliente o especialista..." [ngModel]="filtroBuscar()"
+                    (ngModelChange)="filtroBuscar.set($event)" class="filter-input">
+            </div>
+
+            <div class="filter-item dropdown-box">
+                <i class="fa-solid fa-circle-dot filter-icon icon-pink"></i>
+                <select [ngModel]="filtroEstado()" (ngModelChange)="filtroEstado.set($event)"
+                    class="filter-input select-input">
+                    <option value="">Todos los estados</option>
+                    <option value="PENDIENTE">Pendientes</option>
+                    <option value="ACEPTADA">Aceptadas</option>
+                    <option value="RECHAZADA">Rechazadas</option>
+                    <option value="CANCELADA">Canceladas</option>
+                    <option value="COMPLETADA">Completadas</option>
+                </select>
+            </div>
+
+            <div class="filter-item date-box">
+                <span class="date-label-inside">Desde</span>
+                <input type="date" [ngModel]="fechaInicio()" (ngModelChange)="fechaInicio.set($event)"
+                    class="filter-input date-input">
+            </div>
+
+            <div class="filter-item date-box">
+                <span class="date-label-inside">Hasta</span>
+                <input type="date" [ngModel]="fechaFin()" (ngModelChange)="fechaFin.set($event)"
+                    class="filter-input date-input">
+            </div>
+
+            <button class="btn-reset-modern" (click)="limpiarFiltros()" title="Restablecer filtros">
+                <i class="fa-solid fa-broom"></i>
+            </button>
+        </div>
+    </div>
+
+    @if (loading()) {
+    <div class="loader-box text-center p-5">
+        <div class="custom-spinner mb-3"></div>
+        <p class="text-muted">Sincronizando con el servidor de citas...</p>
+    </div>
+    } @else {
+        @if (citasFiltradas().length === 0) {
+        <div class="empty-card text-center p-5">
+            <div class="empty-icon-box mb-3">
+                <i class="fa-regular fa-calendar-xmark"></i>
+            </div>
+            <h4>No se encontraron citas</h4>
+            <p class="text-muted">Probá ajustando los filtros de búsqueda o el rango de fechas.</p>
+        </div>
+        } @else {
+        <div class="table-responsive-custom">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Especialista</th>
+                        <th>Servicio / Modalidad</th>
+                        <th>Fecha y Hora</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-end">Monto</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (cita of citasFiltradas(); track cita.id) {
+                    <tr class="row-card">
+                        <td>
+                            <div class="user-info">
+                                <span class="user-name">{{ cita.cliente.nombre_completo }}</span>
+                                <span class="user-sub">{{ cita.cliente.correo }}</span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="user-info">
+                                <span class="prof-title">{{ cita.profesional.usuario?.nombre_completo || 'Profesional Asignado' }}</span>
+                                <span class="user-sub text-pink">{{ cita.profesional.tituloProfesional }}</span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="service-info">
+                                <span class="service-name">{{ cita.servicio.nombre }}</span>
+                                <span class="modality-tag" [ngClass]="cita.modalidad.toLowerCase()">
+                                    {{ cita.modalidad }}
+                                </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="date-info">
+                                <span class="date-text">
+                                    <i class="fa-regular fa-calendar me-2"></i>{{ cita.fechaCita | date:'dd/MM/yyyy' }}
+                                </span>
+                                <span class="time-text">
+                                    <i class="fa-regular fa-clock me-2"></i>{{ cita.horaInicio | date:'hh:mm a':'UTC' }}
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="text-center">
+                            <span class="custom-badge" [ngClass]="getBadgeClass(cita.estado)">
+                                {{ cita.estado }}
+                            </span>
+                        </td>
+
+                        <td class="text-end">
+                            <span class="monto-text">₡{{ cita.monto | number:'1.2-2' }}</span>
+                        </td>
+
+                        <td class="text-center">
+                            <!-- CAMBIO CLAVE: Quitamos routerLink y disparamos el método abrirModalDetalle -->
+                            <button class="btn-action" (click)="abrirModalDetalle(cita)" title="Ver detalles de la cita">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
+    }
+</div>
+
+<!-- COMPONENTE DETALLE INYECTADO COMO MODAL -->
+<app-citas-detalle 
+  [cita]="citaSeleccionada()" 
+  (alCerrar)="cerrarModalDetalle()">
+</app-citas-detalle>

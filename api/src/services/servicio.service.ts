@@ -2,8 +2,7 @@ import { prisma } from "../config/prisma";
 import { CreateServicioDto, UpdateServicioDto } from "../dtos/servicio.dto";
 
 export const servicioService = {
-    // 1. Listar todos los servicios activos con sus relaciones
-   // 1. Listar todos los servicios con sus relaciones (Eliminado el filtro hardcoded de estado)
+
 async listar() {
     return await prisma.servicio.findMany({
         include: {

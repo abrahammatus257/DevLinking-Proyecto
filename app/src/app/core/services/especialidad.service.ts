@@ -17,4 +17,7 @@ export class EspecialidadService {
   listar() {
     return this.http.get<ApiPaginatedResponse<Especialidad>>(this.apiUrl);
   }
+  cambiarEstado(id: number) {
+    return this.http.patch(`${this.apiUrl}/${id}/estado`, {});
+  }
 }

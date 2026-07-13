@@ -1,10 +1,9 @@
 import { prisma } from "../config/prisma";
 
 export const especialidadService = {
-    // Listar todas las especialidades activas
-    async listar() {
+
+async listar() {
         return await prisma.especialidad.findMany({
-            where: { estado: "ACTIVO" },
             orderBy: { nombre: "asc" }
         });
     },
@@ -14,5 +13,23 @@ export const especialidadService = {
         return await prisma.especialidad.findUnique({
             where: { id }
         });
-    }
+    },
+
+
+    async cambiarEstado(id: number) {
+        const especialidad = await prisma.especialidad.findUnique({
+            where: { id },
+        });
+
+        if (!especialidad) {
+            throw new Error("Especialidad no encontrada");
+        }
+
+        const nuevoEstado = especialidad.estado === "ACTIVO" ? "INACTIVO" : "ACTIVO";
+
+        return await prisma.especialidad.update({
+            where: { id },
+            data: { estado: nuevoEstado },
+        });
+    },
 };

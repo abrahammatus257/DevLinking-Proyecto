@@ -3,6 +3,8 @@ export type Modalidad =
   | 'PRESENCIAL'
   | 'MIXTA';
 
+  export type Estado = 'ACTIVO' | 'INACTIVO';
+  
 export interface Tecnologia {
 
   id: number;
@@ -69,6 +71,11 @@ export interface Especialidad {
   id: number;
 
   nombre: string;
+
+  descripcion?: string | null; // El string? de Prisma se mapea así
+  estado: Estado;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 
 }
 
