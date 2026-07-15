@@ -2,7 +2,7 @@ import { Rol, Estado, Modalidad, EstadoCita } from "../generated/prisma/enums";
 import { prisma } from "../src/config/prisma";
 
 async function main() {
-    console.log("🚀 Iniciando seed de DevLinking adaptado a rúbrica UTN...");
+    console.log("Iniciando seed de DevLinking");
 
     // 1. Limpieza de datos (Jerárquico para no romper llaves foráneas)
     const models = [
@@ -46,11 +46,10 @@ async function main() {
             { nombre: "Mantenimiento Preventivo", estado: Estado.ACTIVO },
             { nombre: "Arquitectura Cloud", estado: Estado.ACTIVO },
             { nombre: "Diseño de Interiores UI", estado: Estado.ACTIVO },
-            { nombre: "Auditoría de Sistemas", estado: Estado.INACTIVO }, // Requisito inactiva
+            { nombre: "Auditoría de Sistemas", estado: Estado.INACTIVO },
         ],
     });
 
-    // 4. Creación de Tecnologías
     await prisma.tecnologia.createMany({
         data: [
             { nombre: ".NET / C#" },
@@ -79,7 +78,7 @@ async function main() {
     });
     console.log(" Datos maestros (Categorías, Especialidades, Usuarios) insertados.");
 
-    // Recuperar mapas para relaciones continuas
+
     const [categorias, especialidades, tecnologias, usuarios] = await Promise.all([
         prisma.categoria.findMany(),
         prisma.especialidad.findMany(),
@@ -92,7 +91,6 @@ async function main() {
     const techMap = Object.fromEntries(tecnologias.map((t) => [t.nombre, t.id]));
     const userMap = Object.fromEntries(usuarios.map((u) => [u.correo, u.id]));
 
-    // 6. Creación de Perfiles Profesionales (Mínimo 5 requeridos: disponibles y no disponibles)
     const perfilesData = [
         { email: "profesional1@correo.com", titulo: "Ingeniero Backend .NET", exp: 5, mod: Modalidad.MIXTA, prov: "Alajuela", cant: "Alajuela", dist: "San José", tarifa: 15000, disp: true, esps: ["Desarrollo Backend", "Desarrollo Full-Stack"], techs: [".NET / C#", "SQL Server"] },
         { email: "profesional2@correo.com", titulo: "Desarrollador Frontend & UI", exp: 3, mod: Modalidad.VIRTUAL, prov: "San José", cant: "San José", dist: "Carmen", tarifa: 12000, disp: true, esps: ["Desarrollo Frontend"], techs: ["React", "Figma"] },
@@ -123,7 +121,7 @@ async function main() {
     }
     console.log(" 5 Perfiles Profesionales creados exitosamente.");
 
-    // 7. Creación de Servicios (Mínimo 10 requeridos: activos e inactivos)
+    // 7. Creación de Servicios 
     const serviciosData = [
         { nombre: "API REST con .NET Core", precio: 120000, duracion: 40, mod: Modalidad.VIRTUAL, cat: "Desarrollo de Software", perfIdx: 0, esp: "Desarrollo Backend", techs: [".NET / C#", "SQL Server"], est: Estado.ACTIVO },
         { nombre: "Microservicios en C#", precio: 180000, duracion: 60, mod: Modalidad.MIXTA, cat: "Desarrollo de Software", perfIdx: 0, esp: "Desarrollo Backend", techs: [".NET / C#"], est: Estado.ACTIVO },
@@ -157,7 +155,7 @@ async function main() {
     }
     console.log("10 Servicios creados (activos e inactivos).");
 
-    // 8. Creación de Citas (Mínimo 12 requeridas - Estado inicial siempre PENDIENTE de base)
+    // 8. Creación de Citas
     const citasFechas = [
         "2026-07-15T09:00:00Z", "2026-07-16T10:30:00Z", "2026-07-17T14:00:00Z",
         "2026-07-20T08:00:00Z", "2026-07-21T11:00:00Z", "2026-07-22T15:00:00Z",
@@ -168,10 +166,10 @@ async function main() {
     for (let i = 0; i < 12; i++) {
         // Rotación de clientes, profesionales y servicios para cumplir variabilidad de la rúbrica
         const clieEmail = i % 3 === 0 ? "cliente1@correo.com" : i % 3 === 1 ? "cliente2@correo.com" : "cliente3@correo.com";
-        const servIdx = i % 8; // Mapea sobre los primeros 8 servicios activos
+        const servIdx = i % 8; 
         const targetServicio = serviciosCreados[servIdx];
         const fechaBase = new Date(citasFechas[i]);
-        const fechaFin = new Date(fechaBase.getTime() + (60 * 60 * 1000)); // +1 hora
+        const fechaFin = new Date(fechaBase.getTime() + (60 * 60 * 1000));
 
         await prisma.cita.create({
             data: {

@@ -10,7 +10,7 @@ import { Cita } from '../../../core/models/cita.model';
   styleUrls: ['./citas-detalle.css']
 })
 export class CitasDetalle {
-  // Usamos el modelo real Cita en lugar de any
+  
   @Input() cita: Cita | null = null;
   @Output() alCerrar = new EventEmitter<void>();
 

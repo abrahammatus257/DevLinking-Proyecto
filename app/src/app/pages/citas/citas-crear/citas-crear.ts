@@ -5,7 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CitaService } from '../../../core/services/cita.service';
 import { UsuarioService } from '../../../core/services/usuario.service';
 import { ProfesionalService } from '../../../core/services/profesional.service';
-import { ServicioService } from '../../../core/services/servicio.service'; // Asegúrate de que esta ruta sea la correcta en tu proyecto
+import { ServicioService } from '../../../core/services/servicio.service';
 import { ModalidadCita } from '../../../core/models/cita.model';
 import { Usuario } from '../../../core/models/usuario.model';
 import { Profesional } from '../../../core/models/profesional.model';
@@ -24,7 +24,7 @@ export class CitasCrear implements OnInit {
   private readonly servicioService = inject(ServicioService);
   private readonly router = inject(Router);
 
-  // Signals para controlar el estado de la UI
+  // Signals para controlar el estado
   guardando = signal<boolean>(false);
   errorMensaje = signal<string | null>(null);
 
@@ -33,7 +33,7 @@ export class CitasCrear implements OnInit {
   profesionales = signal<Profesional[]>([]);
   servicios = signal<any[]>([]); // Cambia 'any' por tu modelo 'Servicio' correspondiente
 
-  // Campos locales bindeados al Formulario
+
   fechaInput = '';
   horaInput = '';
   modalidadInput: ModalidadCita = 'VIRTUAL';
@@ -50,7 +50,6 @@ export class CitasCrear implements OnInit {
   }
 
   private cargarClientes(): void {
-    // Usamos tu servicio de usuarios enfocado en el rol o listado general según tu API
     this.usuarioService.listar().subscribe({
       next: (response) => {
         this.clientes.set(response.data);
@@ -62,7 +61,6 @@ export class CitasCrear implements OnInit {
   }
 
   private cargarProfesionales(): void {
-    // Usamos el listado de profesionales directo desde su servicio dedicado
     this.profesionalService.listar().subscribe({
       next: (response) => {
         this.profesionales.set(response.data);
@@ -84,18 +82,37 @@ export class CitasCrear implements OnInit {
     });
   }
 
-  // Se dispara automáticamente al cambiar el servicio en el HTML para actualizar la tarifa base automáticamente
   onServicioChange(id: any): void {
-    if (!id) return;
-    const servicio = this.servicios().find(s => s.id === Number(id));
+    if (!id) {
+      this.montoInput = null;
+      this.profesionalIdInput = null;
+      return;
+    }
+
+    const servicioIdNumerico = Number(id);
+    
+    const servicio = this.servicios().find(s => s.id === servicioIdNumerico);
+    
     if (servicio) {
-      // Mapea automáticamente la tarifa o precio base al input de monto
+      // 1. Mapea automáticamente la tarifa o precio base al input de monto
       this.montoInput = servicio.precio || servicio.tarifaBase; 
+      
+      // 2. EXTRAE EL DUEÑO DEL SERVICIO:
+      
+      if (servicio.profesionalId) {
+        this.profesionalIdInput = Number(servicio.profesionalId);
+        console.log(`Profesional asignado automáticamente: ID ${this.profesionalIdInput}`);
+      } else if (servicio.profesional && servicio.profesional.id) {
+      
+        this.profesionalIdInput = Number(servicio.profesional.id);
+        console.log(`Profesional asignado automáticamente (anidado): ID ${this.profesionalIdInput}`);
+      } else {
+        console.warn('Alerta: El servicio seleccionado no tiene un profesionalId asociado en la base de datos.');
+      }
     }
   }
 
 registrarCita(): void {
-  // Aseguramos verificar que los campos no sean nulos o vacíos
   if (!this.fechaInput || !this.horaInput || !this.clienteIdInput || !this.profesionalIdInput || !this.servicioIdInput || !this.montoInput) {
     this.errorMensaje.set('Por favor, completa todos los campos obligatorios.');
     return;
@@ -112,10 +129,8 @@ registrarCita(): void {
       throw new Error('Fecha u hora inválida');
     }
 
-    // Sumar 1 hora para la finalización de la cita
     const fechaFinalizacionObj = new Date(fechaCitaObj.getTime() + (60 * 60 * 1000));
 
-    // Armar el payload asegurando los tipos correctos para Zod
     const payload = {
       fechaCita: fechaCitaObj.toISOString(),
       horaInicio: fechaCitaObj.toISOString(),
@@ -136,7 +151,7 @@ registrarCita(): void {
       error: (err) => {
         console.error('Error desde el servidor:', err);
         this.guardando.set(false);
-        // Capturar el mensaje exacto que configuramos en el backend o en Zod
+        
         this.errorMensaje.set(err.error?.message || 'Error en el servidor al intentar registrar la cita.');
       }
     });

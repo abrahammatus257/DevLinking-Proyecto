@@ -6,7 +6,7 @@ export const servicioService = {
 async listar() {
     return await prisma.servicio.findMany({
         include: {
-            categoria: true, // <--- Traemos todo el objeto completo para asegurar los IDs
+            categoria: true,
             profesional: {
                 select: {
                     tituloProfesional: true,

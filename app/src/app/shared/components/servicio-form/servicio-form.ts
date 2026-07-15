@@ -9,8 +9,8 @@ import { EspecialidadService } from '../../../core/services/especialidad.service
 import { ServicioService } from '../../../core/services/servicio.service';
 import { ImageService } from '../../../core/services/image.service';
 import { CategoriaService } from '../../../core/services/categoria.service';
-import { ProfesionalService } from '../../../core/services/profesional.service'; // Ajuste el nombre según sus archivos
-import { Profesional } from '../../../core/models/profesional.model'; // Ajuste el nombre según sus archivos
+import { ProfesionalService } from '../../../core/services/profesional.service'; 
+import { Profesional } from '../../../core/models/profesional.model'; 
 @Component({
     selector: 'app-servicio-form',
     standalone: true,
@@ -23,7 +23,6 @@ export class ServicioForm implements OnInit {
     private readonly tecnologiaService = inject(TecnologiaService);
     private readonly especialidadService = inject(EspecialidadService);
     private readonly imageService = inject(ImageService);
-    // 2. INYECTAR los dos servicios que faltaban
     private readonly categoriaService = inject(CategoriaService);
     private readonly profesionalService = inject(ProfesionalService);
 
@@ -34,7 +33,7 @@ export class ServicioForm implements OnInit {
 
     tecnologias = signal<Tecnologia[]>([]);
     especialidades = signal<Especialidad[]>([]);
-    categorias = signal<Categoria[]>([]); // Llena esto si usas CategoriaService
+    categorias = signal<Categoria[]>([]); 
 
     profesionales = signal<Profesional[]>([]);
 
@@ -79,7 +78,7 @@ export class ServicioForm implements OnInit {
                 modalidad: serv.modalidad,
                 categoriaId: serv.categoriaId.toString(),
                 profesionalId: serv.profesionalId.toString(),
-                // Extraemos los IDs desde la jerarquía corregida { tecnologia: { id } }
+                
                 tecnologiaIds: serv.tecnologias.map(t => t.tecnologia.id),
                 especialidadIds: serv.especialidades.map(e => e.especialidad.id),
                 imagenPortada: serv.imagenPortada,
@@ -127,7 +126,6 @@ export class ServicioForm implements OnInit {
     submit(): void {
         if (this.saving()) return;
 
-        // Marcar campos manuales (opcional según tus helpers)
         const file = this.selectedImageFile();
         if (file) {
             this.imageService.upload(file).subscribe(res => {

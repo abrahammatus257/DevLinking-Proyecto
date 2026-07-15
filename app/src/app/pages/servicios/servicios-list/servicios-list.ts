@@ -49,14 +49,14 @@ export class ServiciosList implements OnInit {
     });
   }
 
-  // Súper Computed: Filtra por texto (nombre / categoría) y por estado sincronizadamente
+  // Súper Computed: Filtra por texto (nombre / categoría) y por estado
 serviciosFiltrados = computed(() => {
   return this.servicios().filter((servicio) => {
     // 1. Filtro por Nombre
     const texto = this.search().toLowerCase();
     const coincideTexto = servicio.nombre.toLowerCase().includes(texto);
     
-    // 2. Filtro por Categoría (Buscamos directo en la relación del objeto mitigando problemas de tipado)
+    // 2. Filtro por Categoría 
     const coincideCategoria = 
       this.categoriaSeleccionada() === '' || 
       servicio.categoria?.id?.toString() === this.categoriaSeleccionada() ||
@@ -67,7 +67,7 @@ serviciosFiltrados = computed(() => {
       this.modalidadSeleccionada() === '' || 
       servicio.modalidad === this.modalidadSeleccionada();
 
-    // 4. Filtro por Rango de Precio (Cast seguro a Number para resolver el tipo Decimal de Prisma)
+    // 4. Filtro por Rango de Precio 
     const maxPrecio = this.precioMaximo();
     const precioServicio = Number(servicio.precio);
     
@@ -76,7 +76,7 @@ serviciosFiltrados = computed(() => {
       maxPrecio <= 0 || 
       precioServicio <= maxPrecio;
 
-    // 5. Filtro por Estado (Ahora sí funcionará porque el Backend envía los datos inactivos)
+    // 5. Filtro por Estado 
     const coincideEstado = 
       this.estadoSeleccionado() === '' || 
       servicio.estado === this.estadoSeleccionado();

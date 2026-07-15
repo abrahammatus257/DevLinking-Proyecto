@@ -12,14 +12,14 @@
 
   <!-- Alertas de Error -->
   @if (errorMensaje()) {
-    <div class="alert-error">
-      <p>{{ errorMensaje() }}</p>
-    </div>
+  <div class="alert-error">
+    <p>{{ errorMensaje() }}</p>
+  </div>
   }
 
   <!-- Formulario Principal -->
   <form (ngSubmit)="registrarCita()" #citaForm="ngForm" class="appointment-form">
-    
+
     <!-- SECCIÓN 1: Tiempo y Modalidad -->
     <div class="form-section">
       <h3>1. Fecha, Hora y Modalidad</h3>
@@ -53,17 +53,18 @@
           <select id="cliente" name="cliente" [(ngModel)]="clienteIdInput" required class="form-control">
             <option [ngValue]="null" disabled selected>Selecciona un cliente...</option>
             @for (c of clientes(); track c.id) {
-              <option [ngValue]="c.id">{{ c.nombre_completo }}</option>
+            <option [ngValue]="c.id">{{ c.nombre_completo }}</option>
             }
           </select>
         </div>
 
         <div class="form-group">
           <label for="servicio">Servicio Requerido *</label>
-          <select id="servicio" name="servicio" [(ngModel)]="servicioIdInput" (change)="onServicioChange(servicioIdInput)" required class="form-control">
+          <select id="servicio" name="servicio" [(ngModel)]="servicioIdInput"
+            (change)="onServicioChange(servicioIdInput)" required class="form-control">
             <option [ngValue]="null" disabled selected>Selecciona un servicio...</option>
             @for (s of servicios(); track s.id) {
-              <option [ngValue]="s.id">{{ s.nombre }}</option>
+            <option [ngValue]="s.id">{{ s.nombre }}</option>
             }
           </select>
         </div>
@@ -73,7 +74,10 @@
           <select id="profesional" name="profesional" [(ngModel)]="profesionalIdInput" required class="form-control">
             <option [ngValue]="null" disabled selected>Selecciona un especialista...</option>
             @for (p of profesionales(); track p.id) {
-              <option [ngValue]="p.id">{{ p.usuario?.nombre_completo }}</option>
+              
+            @if (!profesionalIdInput || p.id === profesionalIdInput) {
+            <option [ngValue]="p.id">{{ p.usuario?.nombre_completo }}</option>
+            }
             }
           </select>
         </div>
@@ -88,14 +92,16 @@
           <label for="monto">Monto / Tarifa *</label>
           <div class="price-input-wrapper">
             <span class="currency-symbol">₡</span>
-            <input type="number" id="monto" name="monto" [(ngModel)]="montoInput" required min="0" placeholder="0.00" class="form-control price-input" />
+            <input type="number" id="monto" name="monto" [(ngModel)]="montoInput" required min="0" placeholder="0.00"
+              class="form-control price-input" />
           </div>
           <small class="form-help">Se auto-rellena al elegir el servicio, pero podés ajustarlo manualmente.</small>
         </div>
 
         <div class="form-group">
           <label for="descripcion">Descripción o Notas Adicionales</label>
-          <textarea id="descripcion" name="descripcion" [(ngModel)]="descripcionInput" rows="3" placeholder="Detalles importantes sobre el motivo de la cita..." class="form-control"></textarea>
+          <textarea id="descripcion" name="descripcion" [(ngModel)]="descripcionInput" rows="3"
+            placeholder="Detalles importantes sobre el motivo de la cita..." class="form-control"></textarea>
         </div>
       </div>
     </div>
@@ -105,9 +111,9 @@
       <a routerLink="/citas" class="btn-cancel">Cancelar</a>
       <button type="submit" [disabled]="!citaForm.form.valid || guardando()" class="btn-submit">
         @if (guardando()) {
-          <span class="spinner"></span> Guardando...
+        <span class="spinner"></span> Guardando...
         } @else {
-          Agendar Cita
+        Agendar Cita
         }
       </button>
     </div>

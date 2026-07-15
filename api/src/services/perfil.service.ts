@@ -5,7 +5,7 @@ import { CreateProfesionalDto } from "../dtos/profesional.dto";
 import { UpdateProfesionalDto } from "../dtos/profesional.dto";
 
 export const perfilService = {
-  // 1. Listar todos los perfiles profesionales activos/disponibles
+
   async listar() {
     return await prisma.perfilProfesional.findMany({
       include: {
