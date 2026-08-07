@@ -8,10 +8,13 @@ import { Profesional } from '../../../core/models/profesional.model';
 
 import { ProfesionalService } from '../../../core/services/profesional.service';
 
+import { ProfesionalMap }
+from '../../../shared/components/profesional-map/profesional-map';
+
 @Component({
   selector: 'app-profesionales-detalle',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProfesionalMap],
   templateUrl: './profesionales-detalle.html',
   styleUrl: './profesionales-detalle.css',
 })
